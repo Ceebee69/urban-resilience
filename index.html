@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Urban Resilience Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#144bb8",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                        "slate-950": "#0a0d14",
+                        "slate-900": "#111621",
+                        "slate-800": "#1e2433",
+                        "slate-700": "#333b4d",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .resilience-ring {
+            stroke-dasharray: 251.2;
+            stroke-dashoffset: 40.19; /* 84% of 251.2 */
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen font-display selection:bg-primary/30">
+<!-- Top Navigation Bar -->
+<nav class="border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+<div class="max-w-[1600px] mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 bg-primary rounded-full"></div>
+<span class="text-xs font-bold tracking-[0.2em] uppercase text-slate-500 dark:text-slate-400">Urban Resilience</span>
+</div>
+<div class="hidden md:flex items-center gap-6 ml-4">
+<a class="text-[11px] font-semibold tracking-widest uppercase text-primary border-b-2 border-primary py-5" href="#">Status</a>
+<a class="text-[11px] font-semibold tracking-widest uppercase text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors py-5" href="#">Assets</a>
+<a class="text-[11px] font-semibold tracking-widest uppercase text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors py-5" href="#">Network</a>
+<a class="text-[11px] font-semibold tracking-widest uppercase text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors py-5" href="#">Protocol</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded text-[10px] font-mono text-slate-500">
+<span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
+                    SECURE NODE: ALPHA-7
+                </div>
+<button class="p-2 text-slate-500 hover:text-primary transition-colors">
+<span class="material-icons-round text-lg">notifications</span>
+</button>
+<div class="w-8 h-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover grayscale opacity-80" data-alt="User profile portrait close up" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBylhjNEPZHmH0aLLzyZHIgc76OqYd5TUwdO5CGNDnVvTkJPxLovukt9MtHory7jjqXkbE6cvsyIGIj5Eghbb6FB7hrXYSX5mg7BrapPxAZyr7T4PGBlvd7lKm7uoozcVdr8urRKgsfZBXurvBz7ZUcHzyEp8pKfUWQbdEB73F5GP6fmbvyFJ5TISrft4NkcBPM7_6XBxoD3VsxgOoA_pT4lSLAHnmkzfdcu3_eZ3FZPXpwBWrgi65LFTLXuN1yhvZvioL5vDsAv_M"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-[1600px] mx-auto p-6 md:p-10">
+<div class="grid grid-cols-12 gap-10">
+<!-- Resilience Score Section (Left) -->
+<div class="col-span-12 lg:col-span-4 xl:col-span-3">
+<div class="flex flex-col items-center justify-center p-10 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 rounded-xl relative overflow-hidden">
+<div class="absolute top-4 left-4">
+<span class="text-[10px] font-bold tracking-widest uppercase text-slate-400">Readiness Score</span>
+</div>
+<div class="relative w-64 h-64 flex items-center justify-center">
+<!-- Progress Ring -->
+<svg class="w-full h-full" viewbox="0 0 100 100">
+<circle class="text-slate-100 dark:text-slate-800 stroke-current" cx="50" cy="50" fill="transparent" r="40" stroke-width="2"></circle>
+<circle class="text-primary resilience-ring stroke-current" cx="50" cy="50" fill="transparent" r="40" stroke-linecap="round" stroke-width="2"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="text-6xl font-light text-slate-900 dark:text-white">84<span class="text-2xl text-slate-400">%</span></span>
+<div class="flex items-center gap-1 text-[10px] text-emerald-500 font-bold mt-1">
+<span class="material-icons-round text-sm">trending_up</span>
+                                +2.4%
+                            </div>
+</div>
+</div>
+<div class="mt-8 text-center">
+<p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">Current Threat Level: Low</p>
+<button class="px-6 py-2.5 bg-primary text-white text-[11px] font-bold tracking-widest uppercase rounded hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
+                            Initiate Protocol
+                        </button>
+</div>
+</div>
+<!-- Live Monitor -->
+<div class="mt-10">
+<h3 class="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-400 mb-4 px-1">Network Pings</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 border-l-2 border-primary bg-slate-50 dark:bg-slate-900/20 rounded-r text-[11px] font-mono">
+<span class="text-slate-400">14:22:01</span>
+<span class="text-slate-600 dark:text-slate-300">Pantry inventory synced</span>
+<span class="text-emerald-500 uppercase font-bold text-[9px]">Success</span>
+</div>
+<div class="flex items-center justify-between p-3 border-l-2 border-slate-300 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/20 rounded-r text-[11px] font-mono">
+<span class="text-slate-400">14:18:45</span>
+<span class="text-slate-600 dark:text-slate-300">Off-grid power test complete</span>
+<span class="text-emerald-500 uppercase font-bold text-[9px]">Success</span>
+</div>
+<div class="flex items-center justify-between p-3 border-l-2 border-slate-300 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/20 rounded-r text-[11px] font-mono opacity-50">
+<span class="text-slate-400">13:45:12</span>
+<span class="text-slate-600 dark:text-slate-300">External node handshake</span>
+<span class="text-slate-400 uppercase font-bold text-[9px]">Closed</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Asset Grid (Right) -->
+<div class="col-span-12 lg:col-span-8 xl:col-span-9">
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-xl font-light tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
+                        Cloud Pantry <span class="text-xs font-bold tracking-[0.2em] uppercase text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded">Inventory</span>
+</h2>
+<div class="flex gap-2">
+<button class="p-2 border border-slate-200 dark:border-slate-800 rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-icons-round text-sm">filter_list</span>
+</button>
+<button class="p-2 border border-slate-200 dark:border-slate-800 rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-icons-round text-sm">settings</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+<!-- Water Card -->
+<div class="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 p-6 rounded-xl hover:border-primary/50 transition-all group">
+<div class="flex justify-between items-start mb-6">
+<div class="w-10 h-10 bg-primary/10 rounded flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+<span class="material-icons-round text-primary">water_drop</span>
+</div>
+<span class="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded uppercase tracking-tighter">Optimal</span>
+</div>
+<h4 class="text-[11px] font-bold tracking-widest uppercase text-slate-400 mb-1">Water Supply</h4>
+<div class="flex items-baseline gap-2 mb-4">
+<span class="text-3xl font-light text-slate-900 dark:text-white">45</span>
+<span class="text-xs text-slate-500 uppercase tracking-widest">Days</span>
+</div>
+<div class="h-1 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 90%"></div>
+</div>
+</div>
+<!-- Medical Card -->
+<div class="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 p-6 rounded-xl hover:border-primary/50 transition-all group">
+<div class="flex justify-between items-start mb-6">
+<div class="w-10 h-10 bg-primary/10 rounded flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+<span class="material-icons-round text-primary">medical_services</span>
+</div>
+<span class="text-[10px] font-bold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded uppercase tracking-tighter">Review</span>
+</div>
+<h4 class="text-[11px] font-bold tracking-widest uppercase text-slate-400 mb-1">Medical Kits</h4>
+<div class="flex items-baseline gap-2 mb-4">
+<span class="text-3xl font-light text-slate-900 dark:text-white">12</span>
+<span class="text-xs text-slate-500 uppercase tracking-widest">Units</span>
+</div>
+<div class="h-1 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<!-- Rations Card -->
+<div class="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 p-6 rounded-xl hover:border-primary/50 transition-all group">
+<div class="flex justify-between items-start mb-6">
+<div class="w-10 h-10 bg-primary/10 rounded flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+<span class="material-icons-round text-primary">inventory_2</span>
+</div>
+<span class="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded uppercase tracking-tighter">Optimal</span>
+</div>
+<h4 class="text-[11px] font-bold tracking-widest uppercase text-slate-400 mb-1">Food Rations</h4>
+<div class="flex items-baseline gap-2 mb-4">
+<span class="text-3xl font-light text-slate-900 dark:text-white">90</span>
+<span class="text-xs text-slate-500 uppercase tracking-widest">Days</span>
+</div>
+<div class="h-1 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 95%"></div>
+</div>
+</div>
+<!-- Power Card -->
+<div class="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 p-6 rounded-xl hover:border-primary/50 transition-all group">
+<div class="flex justify-between items-start mb-6">
+<div class="w-10 h-10 bg-primary/10 rounded flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+<span class="material-icons-round text-primary">bolt</span>
+</div>
+<span class="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded uppercase tracking-tighter">Charging</span>
+</div>
+<h4 class="text-[11px] font-bold tracking-widest uppercase text-slate-400 mb-1">Energy Cells</h4>
+<div class="flex items-baseline gap-2 mb-4">
+<span class="text-3xl font-light text-slate-900 dark:text-white">82</span>
+<span class="text-xs text-slate-500 uppercase tracking-widest">Percent</span>
+</div>
+<div class="h-1 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 82%"></div>
+</div>
+</div>
+</div>
+<!-- System Visualizer -->
+<div class="mt-10">
+<div class="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+<span class="text-[10px] font-bold tracking-widest uppercase text-slate-400">Tactical Map Overview</span>
+<div class="flex items-center gap-4">
+<span class="text-[10px] font-mono text-slate-500 uppercase">34.0522° N, 118.2437° W</span>
+<div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+</div>
+</div>
+<div class="h-80 relative bg-slate-200 dark:bg-slate-950 flex items-center justify-center">
+<img class="w-full h-full object-cover opacity-30 grayscale contrast-125" data-alt="Abstract dark minimalist tactical map UI" data-location="Los Angeles" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8wngTT20fF3NDAUKfs34wPLno-FEm0LfpEPGfJoOjyExuyltsF9vzDh6u6RqhHeHaYTL4uKRQbBFxorP-DrBndlatO9oAanvUlpr_kwOXwRosTBmZJoOi8HRp_5RneontfhQaQcG4qvfCZ6v3LPURDLu2Qtj12b-XSFXJdyb7itII08TrpQ5UnHVzKZmPm_cC_F2VqWhHP94sRlgGIFbNrQ9eQFii5apQap0vzO-3fhsTGGWRKRVul9Z__Y6W5iHJKAWs80IlTJQ"/>
+<!-- Tactical Overlays -->
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-32 h-32 border border-primary/40 rounded-full flex items-center justify-center">
+<div class="w-20 h-20 border border-primary/20 rounded-full animate-ping"></div>
+<div class="w-2 h-2 bg-primary rounded-full shadow-[0_0_15px_rgba(20,75,184,0.8)]"></div>
+</div>
+</div>
+<!-- Map Data Points -->
+<div class="absolute top-10 left-10 p-4 bg-background-dark/80 backdrop-blur-sm border border-slate-700 rounded-lg text-[10px] font-mono text-slate-400">
+<div class="flex justify-between gap-10 mb-1"><span>AIR QUALITY:</span> <span class="text-emerald-500">GOOD</span></div>
+<div class="flex justify-between gap-10 mb-1"><span>HUMIDITY:</span> <span>42%</span></div>
+<div class="flex justify-between gap-10"><span>WIND:</span> <span>NW 8 MPH</span></div>
+</div>
+</div>
+</div>
+</div>
+<!-- System Status Footer -->
+<div class="mt-10 flex flex-wrap gap-4 items-center justify-between py-6 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-6">
+<div class="flex flex-col">
+<span class="text-[9px] font-bold tracking-widest uppercase text-slate-500">Encryption</span>
+<span class="text-[11px] font-mono text-emerald-500">AES-256 ACTIVE</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[9px] font-bold tracking-widest uppercase text-slate-500">Comms</span>
+<span class="text-[11px] font-mono text-slate-300">SATELLITE LINK</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[9px] font-bold tracking-widest uppercase text-slate-500">Latency</span>
+<span class="text-[11px] font-mono text-slate-300">14MS</span>
+</div>
+</div>
+<div class="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-700">
+<span class="text-[10px] font-bold tracking-widest uppercase text-slate-500">Protocol Status:</span>
+<span class="text-[11px] font-bold uppercase text-primary">Standing By</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating System Pager (Discreet Navigation) -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/10 dark:bg-slate-900/80 backdrop-blur-xl border border-white/10 dark:border-slate-700/50 px-6 py-3 rounded-full shadow-2xl z-50 flex items-center gap-8">
+<button class="flex items-center gap-2 group">
+<span class="material-icons-round text-primary group-hover:scale-110 transition-transform">dashboard</span>
+<span class="text-[10px] font-bold tracking-widest uppercase text-slate-300">Home</span>
+</button>
+<div class="w-px h-4 bg-slate-700"></div>
+<button class="flex items-center gap-2 group opacity-50 hover:opacity-100 transition-opacity">
+<span class="material-icons-round text-slate-300 group-hover:scale-110 transition-transform">security</span>
+<span class="text-[10px] font-bold tracking-widest uppercase text-slate-300">Vault</span>
+</button>
+<div class="w-px h-4 bg-slate-700"></div>
+<button class="flex items-center gap-2 group opacity-50 hover:opacity-100 transition-opacity">
+<span class="material-icons-round text-slate-300 group-hover:scale-110 transition-transform">hub</span>
+<span class="text-[10px] font-bold tracking-widest uppercase text-slate-300">Nodes</span>
+</button>
+</div>
+</body></html>
