@@ -21,15 +21,17 @@
 
     /* ── Hero ── */
     .hero-bg {
-      background: linear-gradient(135deg, #0f1923 0%, #1a2f1a 55%, #0d1f0d 100%);
+      background:
+        linear-gradient(135deg, rgba(15,25,35,.88) 0%, rgba(20,83,45,.82) 55%, rgba(13,31,13,.90) 100%),
+        url('hero-bg.jpg') center center / cover no-repeat;
       position: relative; overflow: hidden;
     }
     .hero-bg::before {
       content: '';
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse at 75% 35%, rgba(22,163,74,.14) 0%, transparent 60%),
-        radial-gradient(ellipse at 15% 80%, rgba(217,119,6,.10) 0%, transparent 50%);
+        radial-gradient(ellipse at 75% 35%, rgba(22,163,74,.10) 0%, transparent 60%),
+        radial-gradient(ellipse at 15% 80%, rgba(217,119,6,.08) 0%, transparent 50%);
     }
     .hero-particle { position:absolute; border-radius:50%; opacity:.06; }
 
