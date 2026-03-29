@@ -3,1024 +3,558 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PrepWise | Emergency Kits Built for Real Life</title>
-  <meta name="description" content="PrepWise builds FEMA-aligned emergency kits for urban and suburban households — hand-packed in Chicago with 5+ year shelf life. Find the right kit for your household in 60 seconds." />
+  <title>PrepWise | Emergency Kits for Real Life</title>
+  <meta name="description" content="PrepWise — FEMA-aligned emergency kits hand-packed in Chicago. Shop by kit, browse add-ons, or subscribe quarterly." />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
       --green:  #16a34a;
       --green-d:#14532d;
-      --green-l:#f0fdf4;
+      --green-h:#0f4020;
       --amber:  #d97706;
-      --amber-l:#fef3c7;
-      --dark:   #0f1923;
+      --page-bg:#f3f4f6;
     }
-    body { font-family: 'Inter', sans-serif; }
-    .font-serif { font-family: 'Playfair Display', serif; }
+    body { font-family: 'Inter', sans-serif; background: var(--page-bg); }
 
-    /* ── Hero ── */
-    .hero-bg {
-      background: linear-gradient(135deg, #0f1923 0%, #1a2f1a 55%, #0d1f0d 100%);
-      position: relative; overflow: hidden;
+    /* ── Top nav ── */
+    .top-nav {
+      background: linear-gradient(180deg, #0f2918 0%, #14532d 100%);
     }
-    .hero-bg::before {
+    .sub-nav { background: #166534; }
+    .sub-nav a:hover { text-decoration: underline; }
+    .nav-search {
+      background: white;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      flex: 1;
+      max-width: 680px;
+    }
+    .nav-search input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 8px 12px;
+      font-size: 14px;
+      color: #111;
+    }
+    .nav-search button {
+      background: var(--amber);
+      border: none;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    .nav-search button:hover { background: #b45309; }
+
+    /* ── Hero banner ── */
+    .hero-banner {
+      background: linear-gradient(135deg, #0f1923 0%, #1a2f1a 60%, #0d1f0d 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-banner::before {
       content: '';
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse at 75% 35%, rgba(22,163,74,.14) 0%, transparent 60%),
-        radial-gradient(ellipse at 15% 80%, rgba(217,119,6,.10) 0%, transparent 50%);
+        radial-gradient(ellipse at 80% 40%, rgba(22,163,74,.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 10% 70%, rgba(217,119,6,.12) 0%, transparent 50%);
     }
-    .hero-particle { position:absolute; border-radius:50%; opacity:.06; }
 
-    /* ── Kit Finder ── */
-    .finder-step { display:none; }
-    .finder-step.active { display:block; }
-    .option-btn {
-      border: 2px solid #e5e7eb;
-      transition: all .2s ease;
-      cursor: pointer;
+    /* ── Shop boxes ── */
+    .shop-box {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.07);
+      transition: box-shadow .2s ease;
+      overflow: hidden;
     }
-    .option-btn:hover { border-color: var(--green); background:#f0fdf4; }
-    .option-btn.selected { border-color: var(--green); background:#dcfce7; }
+    .shop-box:hover { box-shadow: 0 6px 20px rgba(0,0,0,.12); }
 
-    /* ── Kit Cards ── */
-    .kit-card {
-      transition: transform .2s ease, box-shadow .2s ease;
-      border: 2px solid #e5e7eb;
+    /* ── Item preview tiles ── */
+    .item-tile {
+      background: #f8f9fa;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8px 6px;
+      min-height: 80px;
+      transition: background .18s ease;
     }
-    .kit-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,.10); border-color: #d1d5db; }
-    .kit-card.launch { border-color: var(--green); }
-    .phase-badge-launch { background: #dcfce7; color: #166534; }
-    .phase-badge-coming { background: #fef9c3; color: #92400e; }
+    .item-tile:hover { background: #f0fdf4; }
 
-    /* ── Add-ons ── */
-    .addon-pill { transition: all .18s ease; cursor:pointer; border:2px solid #e5e7eb; }
-    .addon-pill:hover { border-color:var(--green); background:#f0fdf4; }
+    /* Themed tile backgrounds per kit */
+    .tile-grid   .item-tile { background: #f0fdf4; }
+    .tile-72hr   .item-tile { background: #eff6ff; }
+    .tile-vehicle .item-tile { background: #fff7ed; }
+    .tile-office  .item-tile { background: #faf5ff; }
+    .tile-addons  .item-tile { background: #fefce8; }
+    .tile-sub     .item-tile { background: #f0fdf4; }
+    .tile-cloud   .item-tile { background: #f8fafc; }
+    .tile-brand   .item-tile { background: #fff1f2; }
 
-    /* ── Animations ── */
-    .reveal { opacity:0; transform:translateY(22px); transition:opacity .6s ease, transform .6s ease; }
-    .reveal.visible { opacity:1; transform:none; }
-
-    /* ── Progress bar ── */
-    .finder-progress { background:#e5e7eb; height:4px; border-radius:2px; overflow:hidden; }
-    .finder-progress-fill { background:linear-gradient(90deg,var(--green),#22c55e); height:100%; transition:width .4s ease; }
-
-    /* ── Misc ── */
-    .trust-item { border-right:1px solid rgba(255,255,255,.12); }
-    .trust-item:last-child { border-right:none; }
-    .gradient-text {
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    .see-more-link {
+      color: var(--green);
+      font-size: .85rem;
+      font-weight: 600;
+      text-decoration: none;
     }
-    .section-label { letter-spacing:.12em; font-size:.75rem; font-weight:700; text-transform:uppercase; }
+    .see-more-link:hover { text-decoration: underline; }
 
-    /* ── Sticky nav shadow ── */
-    .nav-shadow { box-shadow: 0 1px 0 rgba(0,0,0,.07); }
+    /* ── Badge ── */
+    .badge-launch { background: #dcfce7; color: #166534; font-size:.65rem; font-weight:700; padding:2px 7px; border-radius:9999px; text-transform:uppercase; letter-spacing:.07em; }
+    .badge-soon   { background: #fef9c3; color: #92400e; font-size:.65rem; font-weight:700; padding:2px 7px; border-radius:9999px; text-transform:uppercase; letter-spacing:.07em; }
+    .badge-sub    { background: #dcfce7; color: #166534; font-size:.65rem; font-weight:700; padding:2px 7px; border-radius:9999px; text-transform:uppercase; letter-spacing:.07em; }
 
-    /* ── YouTube teaser ── */
-    .yt-card { background: linear-gradient(135deg,#0f1923,#1a2f1a); }
-    .yt-play { width:64px; height:64px; background:rgba(255,255,255,.12); border-radius:50%; display:flex; align-items:center; justify-content:center; transition:background .2s; cursor:pointer; }
-    .yt-play:hover { background:rgba(22,163,74,.5); }
+    /* ── CTA button ── */
+    .btn-green {
+      background: var(--amber);
+      color: white;
+      font-weight: 700;
+      padding: 9px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: .9rem;
+      display: inline-block;
+      transition: background .18s ease;
+    }
+    .btn-green:hover { background: #b45309; }
 
-    /* ── Sub box ── */
-    .sub-box { background:linear-gradient(135deg,#d97706,#f59e0b); }
+    .btn-outline {
+      border: 2px solid var(--green);
+      color: var(--green);
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: .85rem;
+      display: inline-block;
+      transition: all .18s ease;
+    }
+    .btn-outline:hover { background: #f0fdf4; }
 
-    /* Mobile sticky */
-    .mobile-cta { position:fixed; bottom:0; left:0; right:0; z-index:50; background:white; border-top:2px solid #e5e7eb; padding:12px 16px; display:none; align-items:center; justify-content:space-between; }
-    @media(max-width:1023px){ .mobile-cta{ display:flex; } }
+    /* ── Footer ── */
+    footer { background: #232f3e; }
+    footer a { color: #d1d5db; }
+    footer a:hover { color: white; }
   </style>
 </head>
-<body class="bg-white text-gray-900 antialiased">
+<body>
 
-<!-- ═══════════════════════════════════════════════════════
-     NAVIGATION
-═══════════════════════════════════════════════════════ -->
-<nav class="bg-white nav-shadow sticky top-0 z-40">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-    <!-- Logo -->
-    <a href="#" class="flex items-center gap-2.5">
-      <div class="w-8 h-8 rounded-lg bg-green-600 flex items-center justify-center flex-shrink-0">
-        <svg class="w-4.5 h-4.5 text-white" style="width:18px;height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-        </svg>
-      </div>
-      <span class="font-bold text-lg text-gray-900 tracking-tight">PrepWise</span>
-    </a>
+  <!-- ═══════════════════════════════════════════════════ TOP NAV ══ -->
+  <nav class="top-nav sticky top-0 z-50 px-4 py-3">
+    <div class="max-w-7xl mx-auto flex items-center gap-4">
 
-    <!-- Desktop nav -->
-    <div class="hidden md:flex items-center gap-6">
-      <a href="#kits"    class="text-sm font-medium text-gray-600 hover:text-green-600 transition-colors">Our Kits</a>
-      <a href="#finder"  class="text-sm font-medium text-gray-600 hover:text-green-600 transition-colors">Kit Finder</a>
-      <a href="#addons"  class="text-sm font-medium text-gray-600 hover:text-green-600 transition-colors">Add-Ons</a>
-      <a href="#mission" class="text-sm font-medium text-gray-600 hover:text-green-600 transition-colors">Our Mission</a>
-      <a href="https://shop.prepwisekits.com" target="_blank"
-         class="bg-green-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-green-700 transition-colors">
-        Shop Now
+      <!-- Logo -->
+      <a href="index.html" class="flex-shrink-0">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-sm">P</div>
+          <span class="text-white font-bold text-xl tracking-tight">PrepWise</span>
+        </div>
       </a>
-    </div>
 
-    <!-- Mobile hamburger -->
-    <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-      </svg>
-    </button>
-  </div>
-
-  <!-- Mobile menu -->
-  <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 px-4 py-3 space-y-1">
-    <a href="#kits"    class="block py-2 text-sm font-medium text-gray-700 hover:text-green-600">Our Kits</a>
-    <a href="#finder"  class="block py-2 text-sm font-medium text-gray-700 hover:text-green-600">Kit Finder</a>
-    <a href="#addons"  class="block py-2 text-sm font-medium text-gray-700 hover:text-green-600">Add-Ons</a>
-    <a href="#mission" class="block py-2 text-sm font-medium text-gray-700 hover:text-green-600">Our Mission</a>
-    <a href="https://shop.prepwisekits.com" target="_blank"
-       class="block mt-2 bg-green-600 text-white text-sm font-semibold px-4 py-2.5 rounded-lg text-center hover:bg-green-700">
-      Shop Now
-    </a>
-  </div>
-</nav>
-
-
-<!-- ═══════════════════════════════════════════════════════
-     HERO
-═══════════════════════════════════════════════════════ -->
-<section class="hero-bg text-white py-20 lg:py-28 relative">
-  <!-- Decorative circles -->
-  <div class="hero-particle" style="width:320px;height:320px;top:-80px;right:-60px;background:#22c55e;"></div>
-  <div class="hero-particle" style="width:180px;height:180px;bottom:20px;left:-40px;background:#d97706;"></div>
-
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="max-w-3xl">
-      <!-- Label -->
-      <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur rounded-full px-4 py-1.5 mb-6">
-        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-        <span class="text-sm font-medium text-green-200">FEMA-Aligned · Hand-packed in Chicago · Ships in 2–3 days</span>
+      <!-- Deliver to -->
+      <div class="hidden sm:flex flex-col text-xs leading-tight ml-1 flex-shrink-0">
+        <span class="text-gray-300">Ready for</span>
+        <span class="text-white font-bold">any emergency</span>
       </div>
 
-      <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-        Emergency kits built<br/>
-        <span class="gradient-text">for real life.</span>
-      </h1>
+      <!-- Search bar -->
+      <div class="nav-search mx-2 flex-1">
+        <input type="text" placeholder="Search PrepWise kits and add-ons…" />
+        <button>🔍</button>
+      </div>
 
-      <p class="text-lg sm:text-xl text-gray-300 leading-relaxed mb-8 max-w-2xl">
-        Whether you're in a high-rise or a suburb, PrepWise has a kit sized for your household —
-        FEMA-approved contents, 5+ year shelf life, and everything sealed in a waterproof HDPE bucket
-        that's ready when the grid isn't.
-      </p>
-
-      <div class="flex flex-col sm:flex-row gap-4">
-        <a href="#finder"
-           class="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-400 text-white font-bold text-base px-7 py-3.5 rounded-xl transition-all shadow-lg shadow-green-900/30">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-          </svg>
-          Find My Kit (60 sec)
+      <!-- Right links -->
+      <div class="hidden md:flex items-center gap-5 flex-shrink-0">
+        <a href="brand.html" class="text-white text-xs leading-tight hover:text-green-300 transition-colors">
+          <div class="text-gray-300">Learn</div>
+          <div class="font-bold">About PrepWise</div>
         </a>
-        <a href="#kits"
-           class="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/18 text-white font-semibold text-base px-7 py-3.5 rounded-xl border border-white/20 transition-all backdrop-blur">
-          Browse All Kits
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-          </svg>
+        <a href="https://shop.prepwisekits.com" target="_blank" class="text-white text-xs leading-tight hover:text-green-300 transition-colors">
+          <div class="text-gray-300">My</div>
+          <div class="font-bold">Cart 🛒</div>
         </a>
       </div>
     </div>
+  </nav>
 
-    <!-- Stats row -->
-    <div class="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl">
-      <div>
-        <div class="text-3xl font-bold text-white">5+</div>
-        <div class="text-sm text-gray-400 mt-0.5">Year shelf life</div>
-      </div>
-      <div>
-        <div class="text-3xl font-bold text-white">4</div>
-        <div class="text-sm text-gray-400 mt-0.5">Kits available now</div>
-      </div>
-      <div>
-        <div class="text-3xl font-bold text-white">18</div>
-        <div class="text-sm text-gray-400 mt-0.5">Add-on options</div>
-      </div>
-      <div>
-        <div class="text-3xl font-bold text-white">FEMA</div>
-        <div class="text-sm text-gray-400 mt-0.5">Aligned contents</div>
-      </div>
+  <!-- ═══════════════════════════════════════════════════ SUB-NAV ══ -->
+  <div class="sub-nav px-4 py-1.5 text-white text-sm overflow-x-auto whitespace-nowrap">
+    <div class="max-w-7xl mx-auto flex items-center gap-6">
+      <a href="#kits"     class="hover:text-green-200 transition-colors font-medium">All Kits</a>
+      <a href="#addons"   class="hover:text-green-200 transition-colors font-medium">Add-Ons</a>
+      <a href="#sub"      class="hover:text-green-200 transition-colors font-medium">Subscription</a>
+      <a href="brand.html#quiz" class="hover:text-green-200 transition-colors font-medium">Kit Finder Quiz</a>
+      <a href="brand.html" class="hover:text-green-200 transition-colors font-medium">Our Mission</a>
+      <a href="https://shop.prepwisekits.com" target="_blank" class="hover:text-green-200 transition-colors font-medium">Shop on Shopify →</a>
     </div>
   </div>
-</section>
 
-
-<!-- ═══════════════════════════════════════════════════════
-     TRUST BAR
-═══════════════════════════════════════════════════════ -->
-<div class="bg-green-700 text-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-wrap items-center justify-center divide-x divide-green-600">
-      <div class="trust-item px-4 sm:px-6 py-3 flex items-center gap-2 text-sm font-medium">
-        <svg class="w-4 h-4 text-green-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-        Hand-packed in Chicago
-      </div>
-      <div class="trust-item px-4 sm:px-6 py-3 flex items-center gap-2 text-sm font-medium">
-        <svg class="w-4 h-4 text-green-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        FEMA-Aligned Contents
-      </div>
-      <div class="trust-item px-4 sm:px-6 py-3 flex items-center gap-2 text-sm font-medium">
-        <svg class="w-4 h-4 text-green-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        5+ Year Shelf Life
-      </div>
-      <div class="trust-item px-4 sm:px-6 py-3 flex items-center gap-2 text-sm font-medium">
-        <svg class="w-4 h-4 text-green-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
-        Free Shipping Over $149
-      </div>
-      <div class="trust-item px-4 sm:px-6 py-3 flex items-center gap-2 text-sm font-medium">
-        <svg class="w-4 h-4 text-green-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/></svg>
-        30-Day Guarantee
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ═══════════════════════════════════════════════════════
-     KIT FINDER (HOUSEHOLD CONFIGURATOR)
-═══════════════════════════════════════════════════════ -->
-<section id="finder" class="py-20 bg-gray-50">
-  <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-10 reveal">
-      <span class="section-label text-green-600">60-Second Quiz</span>
-      <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-2 mb-3">Find Your Perfect Kit</h2>
-      <p class="text-gray-500">Answer 3 quick questions and we'll match you to the right PrepWise kit — sized and priced for your household.</p>
-    </div>
-
-    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden reveal">
-      <!-- Progress -->
-      <div class="px-8 pt-6 pb-0">
-        <div class="flex items-center justify-between mb-2">
-          <span id="stepLabel" class="text-xs font-semibold text-gray-400 uppercase tracking-widest">Step 1 of 3</span>
-          <span id="stepPct" class="text-xs font-semibold text-green-600">33%</span>
-        </div>
-        <div class="finder-progress mb-6">
-          <div id="progressFill" class="finder-progress-fill" style="width:33%"></div>
+  <!-- ═══════════════════════════════════════════════════ HERO BANNER ══ -->
+  <div class="hero-banner relative px-6 py-10 md:py-14">
+    <div class="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="text-white max-w-xl">
+        <div class="inline-block bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-wider">⚡ Spring Readiness Season</div>
+        <h1 class="text-4xl md:text-5xl font-black leading-tight mb-4">
+          Be Ready.<br />
+          <span class="text-green-400">Before you need to be.</span>
+        </h1>
+        <p class="text-green-100 text-lg mb-6 leading-relaxed">FEMA-aligned emergency kits hand-packed in Chicago. Built for grid collapse, 72-hour outages, roadside emergencies, and more.</p>
+        <div class="flex flex-wrap gap-3">
+          <a href="brand.html#quiz" class="btn-green">Find My Kit →</a>
+          <a href="#kits" class="btn-outline text-green-300 border-green-500 hover:bg-green-900">Browse All Kits</a>
         </div>
       </div>
-
-      <!-- Step 1: Household size -->
-      <div id="step1" class="finder-step active px-8 pb-8">
-        <h3 class="text-xl font-bold text-gray-900 mb-1">How many people are in your household?</h3>
-        <p class="text-sm text-gray-500 mb-6">We'll calculate the right quantities of food, water, and supplies.</p>
-        <div class="grid grid-cols-2 gap-3">
-          <button class="option-btn rounded-xl p-4 text-left" data-step="1" data-value="1">
-            <div class="text-2xl mb-1">🧍</div>
-            <div class="font-semibold text-gray-900">Just me</div>
-            <div class="text-xs text-gray-500 mt-0.5">1 person</div>
-          </button>
-          <button class="option-btn rounded-xl p-4 text-left" data-step="1" data-value="2">
-            <div class="text-2xl mb-1">👫</div>
-            <div class="font-semibold text-gray-900">Two of us</div>
-            <div class="text-xs text-gray-500 mt-0.5">2 people</div>
-          </button>
-          <button class="option-btn rounded-xl p-4 text-left" data-step="1" data-value="4">
-            <div class="text-2xl mb-1">👨‍👩‍👧‍👦</div>
-            <div class="font-semibold text-gray-900">Family</div>
-            <div class="text-xs text-gray-500 mt-0.5">3–4 people</div>
-          </button>
-          <button class="option-btn rounded-xl p-4 text-left" data-step="1" data-value="5">
-            <div class="text-2xl mb-1">🏘️</div>
-            <div class="font-semibold text-gray-900">Extended</div>
-            <div class="text-xs text-gray-500 mt-0.5">5+ people</div>
-          </button>
+      <!-- Stats -->
+      <div class="grid grid-cols-2 gap-3 flex-shrink-0">
+        <div class="bg-white bg-opacity-10 rounded-xl p-4 text-center backdrop-blur-sm border border-white border-opacity-10">
+          <div class="text-3xl font-black text-white">4</div>
+          <div class="text-green-200 text-xs font-semibold mt-1">Ready-to-Ship Kits</div>
         </div>
-      </div>
-
-      <!-- Step 2: Location type -->
-      <div id="step2" class="finder-step px-8 pb-8">
-        <h3 class="text-xl font-bold text-gray-900 mb-1">Where do you live?</h3>
-        <p class="text-sm text-gray-500 mb-6">This affects container size, storage recommendations, and kit configuration.</p>
-        <div class="grid grid-cols-1 gap-3">
-          <button class="option-btn rounded-xl p-4 text-left flex items-center gap-4" data-step="2" data-value="city">
-            <span class="text-3xl">🏙️</span>
-            <div>
-              <div class="font-semibold text-gray-900">City / Apartment</div>
-              <div class="text-xs text-gray-500 mt-0.5">Limited storage space — compact, high-density kits</div>
-            </div>
-          </button>
-          <button class="option-btn rounded-xl p-4 text-left flex items-center gap-4" data-step="2" data-value="suburb">
-            <span class="text-3xl">🏡</span>
-            <div>
-              <div class="font-semibold text-gray-900">Suburb / House</div>
-              <div class="text-xs text-gray-500 mt-0.5">More storage — larger format, off-site option available</div>
-            </div>
-          </button>
-          <button class="option-btn rounded-xl p-4 text-left flex items-center gap-4" data-step="2" data-value="both">
-            <span class="text-3xl">🗺️</span>
-            <div>
-              <div class="font-semibold text-gray-900">Both / On the go</div>
-              <div class="text-xs text-gray-500 mt-0.5">Split time between locations or frequently travel</div>
-            </div>
-          </button>
+        <div class="bg-white bg-opacity-10 rounded-xl p-4 text-center backdrop-blur-sm border border-white border-opacity-10">
+          <div class="text-3xl font-black text-white">21</div>
+          <div class="text-green-200 text-xs font-semibold mt-1">Universal Add-Ons</div>
         </div>
-      </div>
-
-      <!-- Step 3: Primary concern -->
-      <div id="step3" class="finder-step px-8 pb-8">
-        <h3 class="text-xl font-bold text-gray-900 mb-1">What's your biggest concern?</h3>
-        <p class="text-sm text-gray-500 mb-6">We'll match you to the kit built around your most likely scenario.</p>
-        <div class="grid grid-cols-1 gap-3">
-          <button class="option-btn rounded-xl p-4 text-left flex items-center gap-4" data-step="3" data-value="grid">
-            <span class="text-3xl">⚡</span>
-            <div>
-              <div class="font-semibold text-gray-900">Power outage / Grid collapse</div>
-              <div class="text-xs text-gray-500 mt-0.5">Surviving the first critical hours without electricity</div>
-            </div>
-          </button>
-          <button class="option-btn rounded-xl p-4 text-left flex items-center gap-4" data-step="3" data-value="72hr">
-            <span class="text-3xl">🎒</span>
-            <div>
-              <div class="font-semibold text-gray-900">General 72-hour preparedness</div>
-              <div class="text-xs text-gray-500 mt-0.5">FEMA baseline — ready for most emergencies</div>
-            </div>
-          </button>
-          <button class="option-btn rounded-xl p-4 text-left flex items-center gap-4" data-step="3" data-value="longterm">
-            <span class="text-3xl">🥫</span>
-            <div>
-              <div class="font-semibold text-gray-900">Long-term food &amp; water storage</div>
-              <div class="text-xs text-gray-500 mt-0.5">30-day supply — serious preparedness planning</div>
-            </div>
-          </button>
-          <button class="option-btn rounded-xl p-4 text-left flex items-center gap-4" data-step="3" data-value="vehicle">
-            <span class="text-3xl">🚗</span>
-            <div>
-              <div class="font-semibold text-gray-900">Getting stranded on the road</div>
-              <div class="text-xs text-gray-500 mt-0.5">Vehicle emergency kit for commuters and road trips</div>
-            </div>
-          </button>
-          <button class="option-btn rounded-xl p-4 text-left flex items-center gap-4" data-step="3" data-value="office">
-            <span class="text-3xl">🏢</span>
-            <div>
-              <div class="font-semibold text-gray-900">A work or office emergency</div>
-              <div class="text-xs text-gray-500 mt-0.5">24-hour shelter-in-place kit — individual or corporate</div>
-            </div>
-          </button>
+        <div class="bg-white bg-opacity-10 rounded-xl p-4 text-center backdrop-blur-sm border border-white border-opacity-10">
+          <div class="text-3xl font-black text-white">5+yr</div>
+          <div class="text-green-200 text-xs font-semibold mt-1">Shelf Life</div>
         </div>
-      </div>
-
-      <!-- Result -->
-      <div id="stepResult" class="finder-step px-8 pb-8">
-        <div class="text-center mb-6">
-          <div class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-3">
-            <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold text-gray-900">Your recommended kit:</h3>
-        </div>
-        <div id="resultCard" class="bg-green-50 border-2 border-green-500 rounded-xl p-5 mb-5">
-          <!-- Populated by JS -->
-        </div>
-        <div class="flex flex-col gap-3">
-          <a id="resultShopLink" href="https://shop.prepwisekits.com" target="_blank"
-             class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 rounded-xl text-center transition-colors">
-            Shop This Kit →
-          </a>
-          <button onclick="resetFinder()"
-             class="w-full border border-gray-200 hover:border-gray-300 text-gray-600 font-medium py-2.5 rounded-xl text-sm text-center transition-colors">
-            Start Over
-          </button>
+        <div class="bg-white bg-opacity-10 rounded-xl p-4 text-center backdrop-blur-sm border border-white border-opacity-10">
+          <div class="text-3xl font-black text-white">FEMA</div>
+          <div class="text-green-200 text-xs font-semibold mt-1">Aligned Standards</div>
         </div>
       </div>
     </div>
   </div>
-</section>
 
+  <!-- ═══════════════════════════════════════════════════ MAIN GRID ══ -->
+  <main class="max-w-7xl mx-auto px-4 py-8" id="kits">
 
-<!-- ═══════════════════════════════════════════════════════
-     KIT GRID — ALL 5 KITS
-═══════════════════════════════════════════════════════ -->
-<section id="kits" class="py-20 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12 reveal">
-      <span class="section-label text-green-600">The PrepWise Range</span>
-      <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-2 mb-3">Every Kit, Sized for Your Life</h2>
-      <p class="text-gray-500 max-w-2xl mx-auto">From surviving the first 6 hours of a grid collapse to 30-day pantry security —
-      every PrepWise kit ships with FEMA-aligned contents, a 5+ year shelf life, and Chicago craftsmanship.</p>
-    </div>
-
-    <!-- Phase 1 label -->
-    <div class="flex items-center gap-3 mb-6 reveal">
-      <div class="h-px flex-1 bg-gray-100"></div>
-      <span class="text-xs font-bold text-green-700 bg-green-50 border border-green-200 px-3 py-1 rounded-full uppercase tracking-wider">Available Now — Ships in 2–3 Days</span>
-      <div class="h-px flex-1 bg-gray-100"></div>
-    </div>
-
-    <!-- Phase 1 Kits — 2×2 grid -->
-    <div class="grid md:grid-cols-2 gap-6 mb-10 reveal">
+    <!-- ROW 1 — 4 main kits -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
 
       <!-- Kit 1: First 6 Hours -->
-      <div class="kit-card launch rounded-2xl overflow-hidden bg-white">
-        <div class="bg-gradient-to-br from-gray-900 to-green-950 px-6 pt-8 pb-6 text-white">
-          <span class="phase-badge-launch text-xs font-bold px-2.5 py-1 rounded-full inline-block mb-3">⚡ FLAGSHIP KIT</span>
-          <h3 class="font-serif text-2xl font-bold mb-2">First 6 Hours Bundle</h3>
-          <p class="text-green-200 text-sm leading-relaxed">The critical window after a grid collapse. 13 essential items sealed in a waterproof HDPE bucket — ready before the lights go out.</p>
-          <div class="mt-4 flex items-baseline gap-2">
-            <span class="text-3xl font-bold">$199</span>
-            <span class="text-green-300 text-sm">base kit · Enhanced $249</span>
+      <div class="shop-box flex flex-col tile-grid">
+        <div class="p-4 flex-1">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <span class="badge-launch">⚡ Flagship</span>
+              <h2 class="font-bold text-gray-900 text-base mt-1.5 leading-snug">First 6 Hours Bundle</h2>
+            </div>
+            <div class="text-right ml-2 flex-shrink-0">
+              <div class="text-green-700 font-black text-lg">$199</div>
+              <div class="text-gray-400 text-xs">base kit</div>
+            </div>
+          </div>
+          <p class="text-gray-500 text-xs mb-3 leading-relaxed">13 essentials for the critical window after a grid collapse, sealed in a waterproof HDPE bucket.</p>
+          <!-- 2×3 item tiles -->
+          <div class="grid grid-cols-3 gap-1.5 mb-3">
+            <div class="item-tile"><span class="text-lg">🧪</span><span class="text-xs text-gray-600 mt-1 leading-tight">Pool Shock</span></div>
+            <div class="item-tile"><span class="text-lg">📻</span><span class="text-xs text-gray-600 mt-1 leading-tight">NOAA Radio</span></div>
+            <div class="item-tile"><span class="text-lg">🔧</span><span class="text-xs text-gray-600 mt-1 leading-tight">Duct Tape</span></div>
+            <div class="item-tile"><span class="text-lg">🧤</span><span class="text-xs text-gray-600 mt-1 leading-tight">Work Gloves</span></div>
+            <div class="item-tile"><span class="text-lg">✨</span><span class="text-xs text-gray-600 mt-1 leading-tight">Alum. Foil</span></div>
+            <div class="item-tile"><span class="text-lg">+8</span><span class="text-xs text-gray-600 mt-1 leading-tight">more items</span></div>
           </div>
         </div>
-        <div class="p-6">
-          <ul class="space-y-2 mb-5 text-sm text-gray-700">
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> 13-item base bundle · 10 Enhanced upgrades</li>
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> HDPE 5-gal bucket + Gamma Seal lid container</li>
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Pool shock · Baby wipes · Contractor bags</li>
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Hand-crank NOAA radio · Work gloves · Duct tape</li>
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Wool socks · Aluminum foil · Baking soda</li>
-          </ul>
-          <a href="first-6-hours.html"
-             class="block w-full border-2 border-green-600 text-green-700 hover:bg-green-50 text-center font-semibold py-3 rounded-xl transition-colors mb-2">
-            See What's Inside (13 items) →
-          </a>
-          <a href="https://shop.prepwisekits.com/products/first-6-hours-bundle" target="_blank"
-             class="block w-full bg-green-600 hover:bg-green-700 text-white text-center font-bold py-3 rounded-xl transition-colors">
-            Shop the First 6 Hours Bundle →
-          </a>
+        <div class="px-4 pb-4 flex gap-2">
+          <a href="first-6-hours.html" class="see-more-link flex-1 text-center border border-green-600 rounded-md py-2 hover:bg-green-50 transition-colors">See what's inside →</a>
+          <a href="https://shop.prepwisekits.com/products/first-6-hours-bundle" target="_blank" class="flex-1 text-center bg-green-600 hover:bg-green-700 text-white text-xs font-bold py-2 rounded-md transition-colors">Shop →</a>
         </div>
       </div>
 
       <!-- Kit 2: 72-Hour Home Ready -->
-      <div class="kit-card launch rounded-2xl overflow-hidden bg-white">
-        <div class="bg-gradient-to-br from-green-800 to-green-950 px-6 pt-8 pb-6 text-white">
-          <span class="phase-badge-launch text-xs font-bold px-2.5 py-1 rounded-full inline-block mb-3">🎒 FEMA BASELINE</span>
-          <h3 class="font-serif text-2xl font-bold mb-2">72-Hour Home Ready Kit</h3>
-          <p class="text-green-200 text-sm leading-relaxed">Everything FEMA recommends for 72 hours of home preparedness — quantities that automatically scale to your household size.</p>
-          <div class="mt-4 flex items-baseline gap-2">
-            <span class="text-3xl font-bold">$149</span>
-            <span class="text-green-300 text-sm">1 person · Family of 4 $299</span>
-          </div>
-        </div>
-        <div class="p-6">
-          <ul class="space-y-2 mb-5 text-sm text-gray-700">
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> 20-item complete FEMA checklist kit</li>
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Quantities scale: 1 person → family of 4</li>
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Water · food · sanitation · communication</li>
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Digital Companion Guide (meds, pets, docs)</li>
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Heavy-duty duffel bag included</li>
-          </ul>
-          <a href="72-hour-kit.html"
-             class="block w-full border-2 border-green-600 text-green-700 hover:bg-green-50 text-center font-semibold py-3 rounded-xl transition-colors mb-2">
-            See What's Inside (20 items) →
-          </a>
-          <a href="https://shop.prepwisekits.com/products/72-hour-home-ready-kit" target="_blank"
-             class="block w-full bg-green-600 hover:bg-green-700 text-white text-center font-bold py-3 rounded-xl transition-colors">
-            Shop the 72-Hour Home Ready Kit →
-          </a>
-        </div>
-      </div>
-
-      <!-- Kit 4: Vehicle Kit -->
-      <div class="kit-card launch rounded-2xl overflow-hidden bg-white">
-        <div class="bg-gradient-to-br from-slate-800 to-slate-900 px-6 pt-8 pb-6 text-white">
-          <span class="phase-badge-launch text-xs font-bold px-2.5 py-1 rounded-full inline-block mb-3">🚗 VEHICLE READY</span>
-          <h3 class="font-serif text-2xl font-bold mb-2">Vehicle Emergency Kit</h3>
-          <p class="text-slate-300 text-sm leading-relaxed">18 items in a compact trunk bag — roadside safety, survival basics, and communication tools for every driver. Great gifting option.</p>
-          <div class="mt-4 flex items-baseline gap-2">
-            <span class="text-3xl font-bold">$89</span>
-            <span class="text-slate-400 text-sm">individual · Family road kit $129</span>
-          </div>
-        </div>
-        <div class="p-6">
-          <ul class="space-y-2 mb-5 text-sm text-gray-700">
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> 18 items in heavy-duty trunk bag</li>
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Jumper cables · LED flares · first aid kit</li>
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Window breaker · seatbelt cutter · multitool</li>
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> 72-hr water · 3-day food bar · mylar blanket</li>
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Backup phone charger · safety vest · tow rope</li>
-          </ul>
-          <a href="vehicle-kit.html"
-             class="block w-full border-2 border-green-600 text-green-700 hover:bg-green-50 text-center font-semibold py-3 rounded-xl transition-colors mb-2">
-            See What's Inside (18 items) →
-          </a>
-          <a href="https://shop.prepwisekits.com/products/vehicle-emergency-kit" target="_blank"
-             class="block w-full bg-green-600 hover:bg-green-700 text-white text-center font-bold py-3 rounded-xl transition-colors">
-            Shop the Vehicle Emergency Kit →
-          </a>
-        </div>
-      </div>
-
-      <!-- Kit 5: Office Kit -->
-      <div class="kit-card launch rounded-2xl overflow-hidden bg-white">
-        <div class="bg-gradient-to-br from-blue-900 to-blue-950 px-6 pt-8 pb-6 text-white">
-          <span class="phase-badge-launch text-xs font-bold px-2.5 py-1 rounded-full inline-block mb-3">🏢 OFFICE READY</span>
-          <h3 class="font-serif text-2xl font-bold mb-2">Office Shelter-in-Place Kit</h3>
-          <p class="text-blue-200 text-sm leading-relaxed">24 hours of readiness in a hard-shell carry case — built for office workers and corporate gifting programs at any scale.</p>
-          <div class="mt-4 flex items-baseline gap-2">
-            <span class="text-3xl font-bold">$79</span>
-            <span class="text-blue-300 text-sm">individual · B2B bulk pricing available</span>
-          </div>
-        </div>
-        <div class="p-6">
-          <ul class="space-y-2 mb-5 text-sm text-gray-700">
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> 15 items in compact hard-shell carry case</li>
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> 24-hr food, water &amp; respiratory protection</li>
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> 20,000 mAh backup battery · LED flashlight</li>
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> N95 masks · first aid · waterproof doc pouch</li>
-            <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Corporate gifting &amp; bulk pricing on request</li>
-          </ul>
-          <a href="office-kit.html"
-             class="block w-full border-2 border-green-600 text-green-700 hover:bg-green-50 text-center font-semibold py-3 rounded-xl transition-colors mb-2">
-            See What's Inside (15 items) →
-          </a>
-          <a href="https://shop.prepwisekits.com/products/office-shelter-in-place-kit" target="_blank"
-             class="block w-full bg-green-600 hover:bg-green-700 text-white text-center font-bold py-3 rounded-xl transition-colors">
-            Shop the Office Shelter-in-Place Kit →
-          </a>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Phase 2 label -->
-    <div class="flex items-center gap-3 mb-6 reveal">
-      <div class="h-px flex-1 bg-gray-100"></div>
-      <span class="text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full uppercase tracking-wider">Coming Soon — Join the Waitlist</span>
-      <div class="h-px flex-1 bg-gray-100"></div>
-    </div>
-
-    <!-- Phase 2 — Cloud Pantry Crate (solo, centred) -->
-    <div class="max-w-lg mx-auto reveal">
-      <div class="kit-card rounded-2xl overflow-hidden bg-white opacity-90">
-        <div class="bg-gradient-to-br from-amber-900 to-amber-950 px-6 pt-8 pb-6 text-white">
-          <span class="phase-badge-coming text-xs font-bold px-2.5 py-1 rounded-full inline-block mb-3">🥫 LONG-TERM STORAGE</span>
-          <h3 class="font-serif text-2xl font-bold mb-2">Cloud Pantry Crate</h3>
-          <p class="text-amber-200 text-sm leading-relaxed">30-day food &amp; water security — Water Security, Tactical Rations, Trauma &amp; Shield, and Grid Independence in three sealed HDPE buckets.</p>
-          <div class="mt-4 flex items-baseline gap-2">
-            <span class="text-3xl font-bold">$249</span>
-            <span class="text-amber-300 text-sm">1 person · Family of 4 $399</span>
-          </div>
-        </div>
-        <div class="p-6">
-          <ul class="space-y-2 mb-5 text-sm text-gray-700">
-            <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> 4 category bundles · 28+ items</li>
-            <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> 3× HDPE 5-gal buckets + Gamma Seal lids</li>
-            <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> Sawyer water filter · freeze-dried meals · solar bank</li>
-            <li class="flex items-center gap-2"><span class="text-amber-500">✓</span> Off-site storage option for apartment dwellers</li>
-          </ul>
-          <button onclick="joinWaitlist('cloud-pantry')"
-             class="block w-full bg-amber-500 hover:bg-amber-600 text-white text-center font-bold py-3 rounded-xl transition-colors">
-            Join the Waitlist — Be First in Line
-          </button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════════
-     UNIVERSAL ADD-ONS
-═══════════════════════════════════════════════════════ -->
-<section id="addons" class="py-20 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12 reveal">
-      <span class="section-label text-green-600">Complete Any Kit</span>
-      <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-2 mb-3">Universal Add-Ons</h2>
-      <p class="text-gray-500 max-w-xl mx-auto">Every add-on ships together with any kit you order. No minimum. Mix and match to build your perfect setup.</p>
-    </div>
-
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 reveal">
-      <!-- Add-on items (6 featured) -->
-      <div class="addon-pill bg-white rounded-xl p-4 text-center">
-        <div class="text-2xl mb-2">🔦</div>
-        <div class="text-xs font-semibold text-gray-900 mb-1">LED Headlamp</div>
-        <div class="text-xs text-green-600 font-bold">$19.99</div>
-      </div>
-      <div class="addon-pill bg-white rounded-xl p-4 text-center">
-        <div class="text-2xl mb-2">🛠️</div>
-        <div class="text-xs font-semibold text-gray-900 mb-1">Multitool</div>
-        <div class="text-xs text-green-600 font-bold">$22.99</div>
-      </div>
-      <div class="addon-pill bg-white rounded-xl p-4 text-center">
-        <div class="text-2xl mb-2">💧</div>
-        <div class="text-xs font-semibold text-gray-900 mb-1">Water Filter Straw</div>
-        <div class="text-xs text-green-600 font-bold">$18.99</div>
-      </div>
-      <div class="addon-pill bg-white rounded-xl p-4 text-center">
-        <div class="text-2xl mb-2">☀️</div>
-        <div class="text-xs font-semibold text-gray-900 mb-1">Solar Power Bank</div>
-        <div class="text-xs text-green-600 font-bold">$44.99</div>
-      </div>
-      <div class="addon-pill bg-white rounded-xl p-4 text-center">
-        <div class="text-2xl mb-2">🩹</div>
-        <div class="text-xs font-semibold text-gray-900 mb-1">Trauma First Aid</div>
-        <div class="text-xs text-green-600 font-bold">$27.99</div>
-      </div>
-      <div class="addon-pill bg-white rounded-xl p-4 text-center">
-        <div class="text-2xl mb-2">📻</div>
-        <div class="text-xs font-semibold text-gray-900 mb-1">NOAA Weather Radio</div>
-        <div class="text-xs text-green-600 font-bold">$34.99</div>
-      </div>
-    </div>
-
-    <div class="mt-5 text-center reveal">
-      <span class="text-sm text-gray-500">+ 12 more add-ons available —</span>
-      <a href="https://shop.prepwisekits.com/collections/add-ons" target="_blank"
-         class="text-sm font-semibold text-green-600 hover:text-green-700 ml-1">
-        See the full catalog →
-      </a>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════════
-     STAY READY SUBSCRIPTION
-═══════════════════════════════════════════════════════ -->
-<section class="py-20 bg-white reveal">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="sub-box rounded-2xl p-8 sm:p-12 text-white overflow-hidden relative">
-      <div class="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/5 -translate-y-20 translate-x-20"></div>
-      <div class="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
-        <div class="max-w-xl">
-          <div class="inline-block bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-wider">
-            Quarterly Subscription
-          </div>
-          <h2 class="font-serif text-2xl sm:text-3xl font-bold mb-3">Stay Ready, Automatically</h2>
-          <p class="text-amber-100 leading-relaxed mb-4">
-            Every quarter we ship you a replenishment box — fresh water purification tablets, new food bars,
-            batteries, and N95 masks. So your kit is always ready when you need it.
-          </p>
-          <ul class="space-y-1.5 text-sm text-amber-100">
-            <li class="flex items-center gap-2"><span class="text-white font-bold">✓</span> Water purification tablets · Emergency food bars</li>
-            <li class="flex items-center gap-2"><span class="text-white font-bold">✓</span> Battery pack (AA + AAA) · N95 masks · Hand sanitizer</li>
-            <li class="flex items-center gap-2"><span class="text-white font-bold">✓</span> Retail value ~$45 · You pay $29.99/qtr</li>
-          </ul>
-        </div>
-        <div class="flex-shrink-0 text-center">
-          <div class="text-5xl font-bold mb-1">$29.99</div>
-          <div class="text-amber-200 text-sm mb-5">per quarter · cancel anytime</div>
-          <a href="https://shop.prepwisekits.com/products/stay-ready-subscription" target="_blank"
-             class="inline-block bg-white text-amber-700 font-bold px-8 py-3.5 rounded-xl hover:bg-amber-50 transition-colors shadow-lg">
-            Subscribe &amp; Save
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════════
-     YOUTUBE / CONTENT TEASER
-═══════════════════════════════════════════════════════ -->
-<section class="py-20 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12 reveal">
-      <span class="section-label text-green-600">PrepWise on YouTube</span>
-      <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-2 mb-3">Prepare Smarter</h2>
-      <p class="text-gray-500 max-w-xl mx-auto">Scenario-based videos showing what to do — and what to have — in the first hours of a real emergency. New episodes dropping soon.</p>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-5 reveal">
-      <!-- Video card 1 -->
-      <div class="yt-card rounded-2xl overflow-hidden text-white cursor-pointer group" onclick="ytClick(this)">
-        <div class="aspect-video flex items-center justify-center relative p-6">
-          <div class="absolute inset-0 bg-green-900/40"></div>
-          <div class="relative z-10 text-center">
-            <div class="yt-play mx-auto mb-4 group-hover:scale-110 transition-transform">
-              <svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
+      <div class="shop-box flex flex-col tile-72hr">
+        <div class="p-4 flex-1">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <span class="badge-launch">🏠 Home</span>
+              <h2 class="font-bold text-gray-900 text-base mt-1.5 leading-snug">72-Hour Home Ready Kit</h2>
             </div>
-            <div class="text-xs text-green-300 font-semibold uppercase tracking-wider mb-1">Coming soon</div>
-            <div class="text-sm font-bold leading-snug">What happens in the first<br/>6 hours of a grid collapse?</div>
-          </div>
-        </div>
-        <div class="p-4 bg-gray-900/60">
-          <div class="text-xs text-gray-400">Scenario · ~8 min</div>
-        </div>
-      </div>
-
-      <!-- Video card 2 -->
-      <div class="yt-card rounded-2xl overflow-hidden text-white cursor-pointer group" onclick="ytClick(this)">
-        <div class="aspect-video flex items-center justify-center relative p-6">
-          <div class="absolute inset-0 bg-green-900/40"></div>
-          <div class="relative z-10 text-center">
-            <div class="yt-play mx-auto mb-4 group-hover:scale-110 transition-transform">
-              <svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
+            <div class="text-right ml-2 flex-shrink-0">
+              <div class="text-blue-700 font-black text-lg">$149</div>
+              <div class="text-gray-400 text-xs">1 person</div>
             </div>
-            <div class="text-xs text-green-300 font-semibold uppercase tracking-wider mb-1">Coming soon</div>
-            <div class="text-sm font-bold leading-snug">We tested the FEMA 72-Hour<br/>kit — here's what's missing</div>
+          </div>
+          <p class="text-gray-500 text-xs mb-3 leading-relaxed">The FEMA-recommended baseline for households. 72-hour supply scaled to your family size.</p>
+          <div class="grid grid-cols-3 gap-1.5 mb-3">
+            <div class="item-tile"><span class="text-lg">💧</span><span class="text-xs text-gray-600 mt-1 leading-tight">Water Supply</span></div>
+            <div class="item-tile"><span class="text-lg">🍫</span><span class="text-xs text-gray-600 mt-1 leading-tight">Food Bars</span></div>
+            <div class="item-tile"><span class="text-lg">🩹</span><span class="text-xs text-gray-600 mt-1 leading-tight">First Aid</span></div>
+            <div class="item-tile"><span class="text-lg">🔦</span><span class="text-xs text-gray-600 mt-1 leading-tight">Flashlight</span></div>
+            <div class="item-tile"><span class="text-lg">📻</span><span class="text-xs text-gray-600 mt-1 leading-tight">NOAA Radio</span></div>
+            <div class="item-tile"><span class="text-lg">+10</span><span class="text-xs text-gray-600 mt-1 leading-tight">more items</span></div>
           </div>
         </div>
-        <div class="p-4 bg-gray-900/60">
-          <div class="text-xs text-gray-400">Review · ~12 min</div>
+        <div class="px-4 pb-4 flex gap-2">
+          <a href="72-hour-kit.html" class="see-more-link flex-1 text-center border border-green-600 rounded-md py-2 hover:bg-green-50 transition-colors">See what's inside →</a>
+          <a href="https://shop.prepwisekits.com/products/72-hour-home-ready-kit" target="_blank" class="flex-1 text-center bg-green-600 hover:bg-green-700 text-white text-xs font-bold py-2 rounded-md transition-colors">Shop →</a>
         </div>
       </div>
 
-      <!-- Video card 3 -->
-      <div class="yt-card rounded-2xl overflow-hidden text-white cursor-pointer group" onclick="ytClick(this)">
-        <div class="aspect-video flex items-center justify-center relative p-6">
-          <div class="absolute inset-0 bg-green-900/40"></div>
-          <div class="relative z-10 text-center">
-            <div class="yt-play mx-auto mb-4 group-hover:scale-110 transition-transform">
-              <svg class="w-7 h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
+      <!-- Kit 3: Vehicle -->
+      <div class="shop-box flex flex-col tile-vehicle">
+        <div class="p-4 flex-1">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <span class="badge-launch">🚗 Vehicle</span>
+              <h2 class="font-bold text-gray-900 text-base mt-1.5 leading-snug">Vehicle Emergency Kit</h2>
             </div>
-            <div class="text-xs text-green-300 font-semibold uppercase tracking-wider mb-1">Coming soon</div>
-            <div class="text-sm font-bold leading-snug">Apartment prepping in Chicago<br/>— what actually fits</div>
+            <div class="text-right ml-2 flex-shrink-0">
+              <div class="text-orange-700 font-black text-lg">$89</div>
+              <div class="text-gray-400 text-xs">individual</div>
+            </div>
+          </div>
+          <p class="text-gray-500 text-xs mb-3 leading-relaxed">18 items in a compact trunk bag — roadside safety, survival basics, and communication.</p>
+          <div class="grid grid-cols-3 gap-1.5 mb-3">
+            <div class="item-tile"><span class="text-lg">🔦</span><span class="text-xs text-gray-600 mt-1 leading-tight">Flashlight</span></div>
+            <div class="item-tile"><span class="text-lg">🚨</span><span class="text-xs text-gray-600 mt-1 leading-tight">Road Flares</span></div>
+            <div class="item-tile"><span class="text-lg">🧰</span><span class="text-xs text-gray-600 mt-1 leading-tight">Jump Pack</span></div>
+            <div class="item-tile"><span class="text-lg">🌡️</span><span class="text-xs text-gray-600 mt-1 leading-tight">Mylar Blanket</span></div>
+            <div class="item-tile"><span class="text-lg">🩹</span><span class="text-xs text-gray-600 mt-1 leading-tight">First Aid</span></div>
+            <div class="item-tile"><span class="text-lg">+13</span><span class="text-xs text-gray-600 mt-1 leading-tight">more items</span></div>
           </div>
         </div>
-        <div class="p-4 bg-gray-900/60">
-          <div class="text-xs text-gray-400">Urban · ~10 min</div>
+        <div class="px-4 pb-4 flex gap-2">
+          <a href="vehicle-kit.html" class="see-more-link flex-1 text-center border border-green-600 rounded-md py-2 hover:bg-green-50 transition-colors">See what's inside →</a>
+          <a href="https://shop.prepwisekits.com/products/vehicle-emergency-kit" target="_blank" class="flex-1 text-center bg-green-600 hover:bg-green-700 text-white text-xs font-bold py-2 rounded-md transition-colors">Shop →</a>
         </div>
       </div>
-    </div>
 
-    <div class="text-center mt-8 reveal">
-      <a href="https://youtube.com/@prepwise" target="_blank"
-         class="inline-flex items-center gap-2 border-2 border-gray-200 hover:border-green-500 text-gray-700 hover:text-green-700 font-semibold px-6 py-3 rounded-xl transition-all">
-        <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-        Subscribe to PrepWise on YouTube
-      </a>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════════
-     OUR MISSION
-═══════════════════════════════════════════════════════ -->
-<section id="mission" class="py-20 bg-white">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid lg:grid-cols-2 gap-12 items-center reveal">
-      <!-- Text -->
-      <div>
-        <span class="section-label text-green-600">Our Mission</span>
-        <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-2 mb-5">Built in Chicago.<br/>Built for everyone.</h2>
-        <p class="text-gray-600 leading-relaxed mb-4">
-          PrepWise started from a simple observation: most emergency kits are either cheap, incomplete, or so tactical they feel irrelevant to everyday life in a city or suburb.
-        </p>
-        <p class="text-gray-600 leading-relaxed mb-4">
-          We set out to fix that — building FEMA-aligned kits that work whether you're in a high-rise in Chicago or a ranch home in the suburbs. Every kit is hand-packed, every item chosen for real-world utility, and every price point designed to make preparedness accessible.
-        </p>
-        <p class="text-gray-600 leading-relaxed">
-          We're not selling fear. We're selling readiness — the quiet confidence that comes from knowing that whatever happens in the next 6 hours, 72 hours, or 30 days, your household is covered.
-        </p>
-      </div>
-      <!-- Pillars -->
-      <div class="grid grid-cols-2 gap-4">
-        <div class="bg-green-50 rounded-xl p-5 border border-green-100">
-          <div class="w-10 h-10 rounded-lg bg-green-600 flex items-center justify-center mb-3">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <!-- Kit 4: Office -->
+      <div class="shop-box flex flex-col tile-office">
+        <div class="p-4 flex-1">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <span class="badge-launch">🏢 Office</span>
+              <h2 class="font-bold text-gray-900 text-base mt-1.5 leading-snug">Office Shelter-in-Place Kit</h2>
+            </div>
+            <div class="text-right ml-2 flex-shrink-0">
+              <div class="text-purple-700 font-black text-lg">$79</div>
+              <div class="text-gray-400 text-xs">individual</div>
+            </div>
           </div>
-          <h4 class="font-bold text-gray-900 mb-1">FEMA-Aligned</h4>
-          <p class="text-xs text-gray-600">Every kit designed against federal preparedness guidelines</p>
-        </div>
-        <div class="bg-green-50 rounded-xl p-5 border border-green-100">
-          <div class="w-10 h-10 rounded-lg bg-green-600 flex items-center justify-center mb-3">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+          <p class="text-gray-500 text-xs mb-3 leading-relaxed">15 items in a hard-shell carry case. 24-hour readiness for the office. Great corporate gifting option.</p>
+          <div class="grid grid-cols-3 gap-1.5 mb-3">
+            <div class="item-tile"><span class="text-lg">💧</span><span class="text-xs text-gray-600 mt-1 leading-tight">Water Pouches</span></div>
+            <div class="item-tile"><span class="text-lg">😷</span><span class="text-xs text-gray-600 mt-1 leading-tight">N95 Masks</span></div>
+            <div class="item-tile"><span class="text-lg">🩹</span><span class="text-xs text-gray-600 mt-1 leading-tight">First Aid</span></div>
+            <div class="item-tile"><span class="text-lg">🔦</span><span class="text-xs text-gray-600 mt-1 leading-tight">Headlamp</span></div>
+            <div class="item-tile"><span class="text-lg">📄</span><span class="text-xs text-gray-600 mt-1 leading-tight">Doc Pouch</span></div>
+            <div class="item-tile"><span class="text-lg">+10</span><span class="text-xs text-gray-600 mt-1 leading-tight">more items</span></div>
           </div>
-          <h4 class="font-bold text-gray-900 mb-1">Chicago-Made</h4>
-          <p class="text-xs text-gray-600">Hand-packed locally — not a dropship operation</p>
         </div>
-        <div class="bg-amber-50 rounded-xl p-5 border border-amber-100">
-          <div class="w-10 h-10 rounded-lg bg-amber-500 flex items-center justify-center mb-3">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <div class="px-4 pb-4 flex gap-2">
+          <a href="office-kit.html" class="see-more-link flex-1 text-center border border-green-600 rounded-md py-2 hover:bg-green-50 transition-colors">See what's inside →</a>
+          <a href="https://shop.prepwisekits.com/products/office-shelter-in-place-kit" target="_blank" class="flex-1 text-center bg-green-600 hover:bg-green-700 text-white text-xs font-bold py-2 rounded-md transition-colors">Shop →</a>
+        </div>
+      </div>
+
+    </div><!-- / row 1 -->
+
+    <!-- ROW 2 — Add-Ons (wide) + Subscription + Coming Soon + Brand -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4" id="addons">
+
+      <!-- Add-Ons — full featured box (spans 2 cols on lg) -->
+      <div class="shop-box flex flex-col tile-addons lg:col-span-2">
+        <div class="p-4 flex-1">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <span class="badge-sub">🛒 21 Items</span>
+              <h2 class="font-bold text-gray-900 text-base mt-1.5">Universal Add-Ons Catalog</h2>
+              <p class="text-gray-500 text-xs mt-1 leading-relaxed">Mix and match any add-on with any kit. Ships together in one box.</p>
+            </div>
           </div>
-          <h4 class="font-bold text-gray-900 mb-1">5+ Year Shelf Life</h4>
-          <p class="text-xs text-gray-600">Long-dated items, HDPE sealed containers</p>
-        </div>
-        <div class="bg-amber-50 rounded-xl p-5 border border-amber-100">
-          <div class="w-10 h-10 rounded-lg bg-amber-500 flex items-center justify-center mb-3">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/></svg>
+          <!-- 3×4 tile grid for add-ons -->
+          <div class="grid grid-cols-4 gap-1.5 mb-3">
+            <div class="item-tile"><span class="text-base">🔦</span><span class="text-xs text-gray-600 mt-1 leading-tight">LED Flashlight</span><span class="text-green-600 font-bold text-xs">$24.99</span></div>
+            <div class="item-tile"><span class="text-base">🏔️</span><span class="text-xs text-gray-600 mt-1 leading-tight">Headlamp</span><span class="text-green-600 font-bold text-xs">$19.99</span></div>
+            <div class="item-tile"><span class="text-base">🛠️</span><span class="text-xs text-gray-600 mt-1 leading-tight">Multitool</span><span class="text-green-600 font-bold text-xs">$22.99</span></div>
+            <div class="item-tile"><span class="text-base">💧</span><span class="text-xs text-gray-600 mt-1 leading-tight">Filter Straw</span><span class="text-green-600 font-bold text-xs">$18.99</span></div>
+            <div class="item-tile"><span class="text-base">☀️</span><span class="text-xs text-gray-600 mt-1 leading-tight">Solar Power Bank</span><span class="text-green-600 font-bold text-xs">$44.99</span></div>
+            <div class="item-tile"><span class="text-base">🌡️</span><span class="text-xs text-gray-600 mt-1 leading-tight">Mylar Blankets</span><span class="text-green-600 font-bold text-xs">$12.99</span></div>
+            <div class="item-tile"><span class="text-base">🩺</span><span class="text-xs text-gray-600 mt-1 leading-tight">Trauma Kit</span><span class="text-green-600 font-bold text-xs">$27.99</span></div>
+            <div class="item-tile"><span class="text-base">🪢</span><span class="text-xs text-gray-600 mt-1 leading-tight">Paracord</span><span class="text-green-600 font-bold text-xs">$14.99</span></div>
+            <div class="item-tile"><span class="text-base">🔥</span><span class="text-xs text-gray-600 mt-1 leading-tight">Fire Starter</span><span class="text-green-600 font-bold text-xs">$12.99</span></div>
+            <div class="item-tile"><span class="text-base">😷</span><span class="text-xs text-gray-600 mt-1 leading-tight">N95 Masks</span><span class="text-green-600 font-bold text-xs">$14.99</span></div>
+            <div class="item-tile"><span class="text-base">⚠️</span><span class="text-xs text-gray-600 mt-1 leading-tight">Whistle</span><span class="text-green-600 font-bold text-xs">$5.99</span></div>
+            <div class="item-tile"><span class="text-base">+10</span><span class="text-xs text-gray-600 mt-1 leading-tight">more add-ons</span><span class="text-xs text-gray-400">view all</span></div>
           </div>
-          <h4 class="font-bold text-gray-900 mb-1">30-Day Guarantee</h4>
-          <p class="text-xs text-gray-600">If it's not right, we make it right — no questions</p>
+        </div>
+        <div class="px-4 pb-4">
+          <a href="https://shop.prepwisekits.com/collections/add-ons" target="_blank" class="block w-full text-center bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 rounded-md transition-colors text-sm">Browse All 21 Add-Ons →</a>
         </div>
       </div>
-    </div>
-  </div>
-</section>
 
-
-<!-- ═══════════════════════════════════════════════════════
-     FINAL CTA
-═══════════════════════════════════════════════════════ -->
-<section class="bg-green-700 py-16 text-white text-center reveal">
-  <div class="max-w-2xl mx-auto px-4 sm:px-6">
-    <h2 class="font-serif text-3xl sm:text-4xl font-bold mb-4">Ready when you are.</h2>
-    <p class="text-green-200 text-lg mb-8 leading-relaxed">
-      Most people think about preparedness after the emergency. Don't be most people.
-    </p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <a href="#finder"
-         class="inline-flex items-center justify-center gap-2 bg-white text-green-700 font-bold px-8 py-3.5 rounded-xl hover:bg-green-50 transition-colors shadow-lg">
-        Find My Kit →
-      </a>
-      <a href="https://shop.prepwisekits.com" target="_blank"
-         class="inline-flex items-center justify-center gap-2 bg-green-600 border-2 border-white/30 hover:border-white/60 text-white font-bold px-8 py-3.5 rounded-xl transition-colors">
-        Shop All Kits
-      </a>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════════
-     FOOTER
-═══════════════════════════════════════════════════════ -->
-<footer class="bg-gray-900 text-gray-400 py-12">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
-      <!-- Brand -->
-      <div>
-        <div class="flex items-center gap-2 mb-4">
-          <div class="w-7 h-7 rounded-md bg-green-600 flex items-center justify-center">
-            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-            </svg>
+      <!-- Stay Ready Subscription -->
+      <div class="shop-box flex flex-col tile-sub" id="sub">
+        <div class="p-4 flex-1">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <span class="badge-sub">🔄 Subscribe</span>
+              <h2 class="font-bold text-gray-900 text-base mt-1.5">Stay Ready Quarterly</h2>
+            </div>
           </div>
-          <span class="font-bold text-white">PrepWise</span>
+          <p class="text-gray-500 text-xs mb-4 leading-relaxed">Curated seasonal resupply box delivered every 3 months. Fresh items, rotating themes, free shipping.</p>
+          <div class="grid grid-cols-2 gap-1.5 mb-4">
+            <div class="item-tile"><span class="text-lg">🌱</span><span class="text-xs text-gray-600 mt-1 leading-tight">Spring Prep</span></div>
+            <div class="item-tile"><span class="text-lg">🌞</span><span class="text-xs text-gray-600 mt-1 leading-tight">Summer Heat</span></div>
+            <div class="item-tile"><span class="text-lg">🍂</span><span class="text-xs text-gray-600 mt-1 leading-tight">Fall Storm</span></div>
+            <div class="item-tile"><span class="text-lg">❄️</span><span class="text-xs text-gray-600 mt-1 leading-tight">Winter Freeze</span></div>
+          </div>
+          <div class="bg-green-50 rounded-lg p-3 text-center mb-3">
+            <div class="text-green-800 font-black text-2xl">$49<span class="text-sm font-normal">/qtr</span></div>
+            <div class="text-green-600 text-xs">Free shipping · Cancel anytime</div>
+          </div>
         </div>
-        <p class="text-sm leading-relaxed">Emergency kits built for real life — FEMA-aligned, hand-packed in Chicago.</p>
-        <p class="text-xs text-gray-600 mt-3">© 2026 Urban Resilience Systems. All rights reserved.</p>
-      </div>
-
-      <!-- Kits -->
-      <div>
-        <h4 class="text-white font-semibold text-sm mb-4">Our Kits</h4>
-        <ul class="space-y-2 text-sm">
-          <li><a href="https://shop.prepwisekits.com/products/first-6-hours-bundle" class="hover:text-white transition-colors">First 6 Hours Bundle</a></li>
-          <li><a href="https://shop.prepwisekits.com/products/72-hour-home-ready-kit" class="hover:text-white transition-colors">72-Hour Home Ready Kit</a></li>
-          <li><a href="https://shop.prepwisekits.com/products/vehicle-emergency-kit" class="hover:text-white transition-colors">Vehicle Emergency Kit</a></li>
-          <li><a href="https://shop.prepwisekits.com/products/office-shelter-in-place-kit" class="hover:text-white transition-colors">Office Shelter-in-Place Kit</a></li>
-          <li><a href="#kits" class="hover:text-white transition-colors">Cloud Pantry Crate <span class="text-amber-500 text-xs">Coming soon</span></a></li>
-        </ul>
-      </div>
-
-      <!-- Info -->
-      <div>
-        <h4 class="text-white font-semibold text-sm mb-4">Helpful Links</h4>
-        <ul class="space-y-2 text-sm">
-          <li><a href="#finder" class="hover:text-white transition-colors">Kit Finder Quiz</a></li>
-          <li><a href="https://shop.prepwisekits.com/collections/add-ons" class="hover:text-white transition-colors">Add-On Catalog</a></li>
-          <li><a href="https://shop.prepwisekits.com/products/stay-ready-subscription" class="hover:text-white transition-colors">Stay Ready Subscription</a></li>
-          <li><a href="https://www.ready.gov/kit" target="_blank" class="hover:text-white transition-colors">FEMA Emergency Guide ↗</a></li>
-          <li><a href="https://youtube.com/@prepwise" target="_blank" class="hover:text-white transition-colors">YouTube Channel ↗</a></li>
-        </ul>
-      </div>
-
-      <!-- Newsletter -->
-      <div>
-        <h4 class="text-white font-semibold text-sm mb-4">Stay in the Loop</h4>
-        <p class="text-sm mb-3">New kits, preparedness tips, and YouTube episodes — delivered to your inbox.</p>
-        <div class="flex gap-2">
-          <input type="email" placeholder="your@email.com"
-                 class="flex-1 bg-gray-800 text-white text-sm px-3 py-2 rounded-lg border border-gray-700 focus:border-green-500 focus:outline-none" />
-          <button class="bg-green-600 hover:bg-green-500 text-white text-sm font-semibold px-3 py-2 rounded-lg transition-colors">→</button>
+        <div class="px-4 pb-4">
+          <a href="https://shop.prepwisekits.com/products/stay-ready-subscription" target="_blank" class="block w-full text-center bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-md transition-colors text-sm">Subscribe Now →</a>
         </div>
-        <p class="text-xs text-gray-600 mt-2">No spam. Unsubscribe any time.</p>
+      </div>
+
+      <!-- Cloud Pantry Crate (Coming Soon) -->
+      <div class="shop-box flex flex-col tile-cloud opacity-90">
+        <div class="p-4 flex-1">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <span class="badge-soon">🕐 Coming Soon</span>
+              <h2 class="font-bold text-gray-900 text-base mt-1.5">Cloud Pantry Crate</h2>
+            </div>
+          </div>
+          <p class="text-gray-500 text-xs mb-4 leading-relaxed">30-day food and water security. Long-term shelf-stable supplies for serious preparedness.</p>
+          <div class="grid grid-cols-2 gap-1.5 mb-4">
+            <div class="item-tile"><span class="text-lg">🥫</span><span class="text-xs text-gray-500 mt-1 leading-tight">30-day food</span></div>
+            <div class="item-tile"><span class="text-lg">🚰</span><span class="text-xs text-gray-500 mt-1 leading-tight">Water storage</span></div>
+            <div class="item-tile"><span class="text-lg">💊</span><span class="text-xs text-gray-500 mt-1 leading-tight">Supplements</span></div>
+            <div class="item-tile"><span class="text-lg">📦</span><span class="text-xs text-gray-500 mt-1 leading-tight">Family size</span></div>
+          </div>
+          <div class="bg-amber-50 rounded-lg p-3 text-center mb-3">
+            <div class="text-amber-800 font-black text-xl">From $249</div>
+            <div class="text-amber-600 text-xs">Q3 2025 launch · Join waitlist</div>
+          </div>
+        </div>
+        <div class="px-4 pb-4">
+          <a href="brand.html#kits" class="block w-full text-center border-2 border-amber-500 text-amber-700 hover:bg-amber-50 font-bold py-2.5 rounded-md transition-colors text-sm">Join the Waitlist →</a>
+        </div>
+      </div>
+
+    </div><!-- / row 2 -->
+
+    <!-- ROW 3 — Trust Bar + Brand Story -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+
+      <!-- FEMA Aligned -->
+      <div class="shop-box p-5 flex items-start gap-4">
+        <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center text-xl flex-shrink-0">🏛️</div>
+        <div>
+          <h3 class="font-bold text-gray-900 text-sm mb-1">FEMA-Aligned Standards</h3>
+          <p class="text-gray-500 text-xs leading-relaxed">Every kit is benchmarked against FEMA's official emergency supply checklist. We start with the standard — then exceed it.</p>
+          <a href="brand.html#mission" class="see-more-link text-xs mt-2 inline-block">Our approach →</a>
+        </div>
+      </div>
+
+      <!-- Chicago Packed -->
+      <div class="shop-box p-5 flex items-start gap-4">
+        <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center text-xl flex-shrink-0">📦</div>
+        <div>
+          <h3 class="font-bold text-gray-900 text-sm mb-1">Hand-Packed in Chicago</h3>
+          <p class="text-gray-500 text-xs leading-relaxed">Every order is individually inspected, packed, and shipped from our Chicago facility. No dropshipping, no shortcuts.</p>
+          <a href="brand.html#mission" class="see-more-link text-xs mt-2 inline-block">Our story →</a>
+        </div>
+      </div>
+
+      <!-- Kit Finder Quiz -->
+      <div class="shop-box p-5 flex items-start gap-4">
+        <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center text-xl flex-shrink-0">🎯</div>
+        <div>
+          <h3 class="font-bold text-gray-900 text-sm mb-1">Not Sure Which Kit?</h3>
+          <p class="text-gray-500 text-xs leading-relaxed">Take our 60-second Kit Finder quiz. Answer 3 questions about your household and get a personalized recommendation.</p>
+          <a href="brand.html#quiz" class="see-more-link text-xs mt-2 inline-block">Take the quiz →</a>
+        </div>
+      </div>
+
+    </div><!-- / row 3 -->
+
+    <!-- ROW 4 — YouTube / Brand + Full brand page CTA -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+
+      <!-- YouTube teaser -->
+      <div class="shop-box overflow-hidden">
+        <div class="bg-gradient-to-br from-gray-900 to-gray-800 p-6 text-white relative">
+          <div class="absolute top-4 right-4 text-4xl opacity-20">▶️</div>
+          <span class="inline-block bg-red-600 text-white text-xs font-bold px-2 py-1 rounded mb-3">▶ YouTube</span>
+          <h3 class="font-bold text-lg mb-2">PrepWise on YouTube</h3>
+          <p class="text-gray-300 text-sm leading-relaxed mb-4">In-depth kit walkthroughs, survival gear reviews, and urban preparedness guides. New videos every week.</p>
+          <a href="https://www.youtube.com/@PrepWiseKits" target="_blank" class="inline-block bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-md text-sm transition-colors">Subscribe to Channel →</a>
+        </div>
+      </div>
+
+      <!-- Full brand page CTA -->
+      <div class="shop-box overflow-hidden">
+        <div class="bg-gradient-to-br from-green-900 to-green-800 p-6 text-white relative">
+          <div class="absolute top-4 right-4 text-4xl opacity-20">🛡️</div>
+          <span class="inline-block bg-green-500 text-white text-xs font-bold px-2 py-1 rounded mb-3">Full Brand Experience</span>
+          <h3 class="font-bold text-lg mb-2">The PrepWise Story</h3>
+          <p class="text-gray-300 text-sm leading-relaxed mb-4">Kit Finder quiz, our full mission, in-depth kit details, and the philosophy behind every item we chose.</p>
+          <a href="brand.html" class="inline-block bg-green-500 hover:bg-green-400 text-white font-bold px-4 py-2 rounded-md text-sm transition-colors">Explore the Full Site →</a>
+        </div>
+      </div>
+
+    </div><!-- / row 4 -->
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════ FOOTER ══ -->
+  <footer class="py-10 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-7 h-7 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-xs">P</div>
+            <span class="text-white font-bold text-lg">PrepWise</span>
+          </div>
+          <p class="text-gray-400 text-xs leading-relaxed">Emergency kits built for real life. FEMA-aligned, hand-packed in Chicago.</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-3">Our Kits</h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="first-6-hours.html" class="hover:text-white transition-colors">First 6 Hours Bundle</a></li>
+            <li><a href="72-hour-kit.html" class="hover:text-white transition-colors">72-Hour Home Ready Kit</a></li>
+            <li><a href="vehicle-kit.html" class="hover:text-white transition-colors">Vehicle Emergency Kit</a></li>
+            <li><a href="office-kit.html" class="hover:text-white transition-colors">Office Shelter-in-Place Kit</a></li>
+            <li><a href="brand.html#kits" class="hover:text-white transition-colors">Cloud Pantry Crate <span class="text-amber-400">Soon</span></a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-3">Shop</h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="https://shop.prepwisekits.com/collections/add-ons" target="_blank" class="hover:text-white transition-colors">Universal Add-Ons</a></li>
+            <li><a href="https://shop.prepwisekits.com/products/stay-ready-subscription" target="_blank" class="hover:text-white transition-colors">Stay Ready Subscription</a></li>
+            <li><a href="https://shop.prepwisekits.com" target="_blank" class="hover:text-white transition-colors">Shopify Store</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-3">Learn</h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="brand.html#quiz" class="hover:text-white transition-colors">Kit Finder Quiz</a></li>
+            <li><a href="brand.html#mission" class="hover:text-white transition-colors">Our Mission</a></li>
+            <li><a href="https://www.youtube.com/@PrepWiseKits" target="_blank" class="hover:text-white transition-colors">YouTube Channel</a></li>
+            <li><a href="https://www.ready.gov/kit" target="_blank" class="hover:text-white transition-colors">FEMA Ready.gov</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
+        <p class="text-gray-500 text-xs">© 2025 Urban Resilience Systems LLC · PrepWise · Chicago, IL</p>
+        <p class="text-gray-600 text-xs">Hand-packed with care · FEMA-aligned · 5+ year shelf life</p>
       </div>
     </div>
-
-    <div class="border-t border-gray-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <p class="text-xs text-gray-600">PrepWise kits are designed for general emergency preparedness. Contents do not constitute medical, legal, or safety advice. Always follow guidance from local emergency authorities.</p>
-      <div class="flex items-center gap-4 text-xs flex-shrink-0">
-        <a href="#" class="hover:text-white transition-colors">Privacy</a>
-        <a href="#" class="hover:text-white transition-colors">Terms</a>
-        <a href="mailto:hello@prepwisekits.com" class="hover:text-white transition-colors">Contact</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-
-<!-- ═══════════════════════════════════════════════════════
-     MOBILE STICKY CTA
-═══════════════════════════════════════════════════════ -->
-<div class="mobile-cta">
-  <div>
-    <div class="text-xs text-gray-500 font-medium">Starting at</div>
-    <div class="text-base font-bold text-gray-900">$79 <span class="text-green-600">— Free shipping over $149</span></div>
-  </div>
-  <a href="#finder" class="bg-green-600 text-white font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-green-700 transition-colors">
-    Find My Kit
-  </a>
-</div>
-
-
-<!-- ═══════════════════════════════════════════════════════
-     JAVASCRIPT
-═══════════════════════════════════════════════════════ -->
-<script>
-// ── Mobile menu ──────────────────────────────────────────
-document.getElementById('mobileMenuBtn').addEventListener('click', () => {
-  const m = document.getElementById('mobileMenu');
-  m.classList.toggle('hidden');
-});
-
-// ── Scroll reveal ───────────────────────────────────────
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// ── Kit Finder ──────────────────────────────────────────
-const answers = {};
-let currentStep = 1;
-
-// Kit recommendation logic
-const kitMap = {
-  grid:    { name: 'First 6 Hours Grid Collapse Bundle', price: '$199 (base) · $249 (Enhanced)', desc: 'Built for the exact scenario you\'re most concerned about — surviving the critical first hours without power.', link: 'https://shop.prepwisekits.com/products/first-6-hours-bundle' },
-  '72hr':  { name: '72-Hour Home Ready Kit',             price: '$149 (1 person) · $299 (family)', desc: 'The FEMA-recommended baseline — everything your household needs for 72 hours, sized to your family.', link: 'https://shop.prepwisekits.com/products/72-hour-home-ready-kit' },
-  longterm:{ name: 'Cloud Pantry Crate',                 price: '$249 (1 person) · $399 (family)', desc: '30-day food and water security. Join the waitlist and be first in line when this kit launches.', link: '#kits' },
-  vehicle: { name: 'Vehicle Emergency Kit',              price: '$89 (individual) · $129 (family road kit)', desc: '18 items in a compact trunk bag — roadside safety, survival basics, and communication. Ships now.', link: 'https://shop.prepwisekits.com/products/vehicle-emergency-kit' },
-  office:  { name: 'Office Shelter-in-Place Kit',        price: '$79 (individual) · B2B bulk pricing available', desc: '15 items in a hard-shell carry case. 24-hour readiness for the office — and a great corporate gifting option.', link: 'https://shop.prepwisekits.com/products/office-shelter-in-place-kit' },
-};
-
-document.querySelectorAll('.option-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const step = parseInt(btn.dataset.step);
-    const val  = btn.dataset.value;
-
-    // Select visual
-    document.querySelectorAll(`[data-step="${step}"]`).forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    answers[step] = val;
-
-    // Auto-advance after brief delay
-    setTimeout(() => advanceStep(step), 320);
-  });
-});
-
-function advanceStep(fromStep) {
-  if (fromStep < 3) {
-    showStep(fromStep + 1);
-  } else {
-    showResult();
-  }
-}
-
-function showStep(n) {
-  currentStep = n;
-  document.querySelectorAll('.finder-step').forEach(s => s.classList.remove('active'));
-  document.getElementById(`step${n}`).classList.add('active');
-
-  const pct = Math.round((n / 3) * 100);
-  document.getElementById('stepLabel').textContent = `Step ${n} of 3`;
-  document.getElementById('stepPct').textContent = pct + '%';
-  document.getElementById('progressFill').style.width = pct + '%';
-}
-
-function showResult() {
-  const concern = answers[3] || '72hr';
-  const kit = kitMap[concern];
-
-  document.getElementById('resultCard').innerHTML = `
-    <div class="flex items-start gap-3">
-      <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
-        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 7l-8 5-8-5V5l8 5 8-5v2z"/>
-        </svg>
-      </div>
-      <div>
-        <h4 class="font-bold text-gray-900 mb-0.5">${kit.name}</h4>
-        <div class="text-green-600 font-semibold text-sm mb-2">${kit.price}</div>
-        <p class="text-sm text-gray-600 leading-relaxed">${kit.desc}</p>
-      </div>
-    </div>
-  `;
-
-  document.getElementById('resultShopLink').href = kit.link;
-
-  document.querySelectorAll('.finder-step').forEach(s => s.classList.remove('active'));
-  document.getElementById('stepResult').classList.add('active');
-  document.getElementById('stepLabel').textContent = 'Your match';
-  document.getElementById('stepPct').textContent = '✓';
-  document.getElementById('progressFill').style.width = '100%';
-}
-
-function resetFinder() {
-  Object.keys(answers).forEach(k => delete answers[k]);
-  document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-  showStep(1);
-}
-
-// ── Waitlist ─────────────────────────────────────────────
-function joinWaitlist(kitId) {
-  const email = prompt('Enter your email to join the waitlist for this kit:');
-  if (email && email.includes('@')) {
-    alert(`You're on the list! We'll email ${email} when this kit is available.`);
-  }
-}
-
-// ── YouTube placeholder click ────────────────────────────
-function ytClick(card) {
-  window.open('https://youtube.com/@prepwise', '_blank');
-}
-</script>
+  </footer>
 
 </body>
 </html>
