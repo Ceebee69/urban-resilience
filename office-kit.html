@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Office Shelter-in-Place Kit | PrepWise</title>
-  <meta name="description" content="See every item inside the PrepWise Office Shelter-in-Place Kit — 15 items for 24-hour work readiness. Corporate gifting available." />
+  <meta name="description" content="See every item inside the PrepWise Office Shelter-in-Place Kit — 15 items for 24-hour work readiness." />
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet" />
   <style>
@@ -13,27 +13,16 @@
     .font-serif { font-family: 'Playfair Display', serif; }
     .nav-shadow { box-shadow: 0 1px 0 rgba(0,0,0,.07); }
     .section-label { letter-spacing:.12em; font-size:.75rem; font-weight:700; text-transform:uppercase; }
-    .item-pill {
-      border: 2px solid #d1fae5;
-      transition: transform .18s ease, box-shadow .18s ease;
-    }
-    .item-pill:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(22,163,74,.10); }
-    .addon-pill {
-      border: 2px solid #e5e7eb;
-      transition: all .18s ease;
-      cursor: pointer;
-    }
-    .addon-pill:hover { border-color: var(--green); background:#f0fdf4; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(22,163,74,.10); }
+    .item-pill { border:2px solid #d1fae5; transition:transform .18s ease, box-shadow .18s ease; }
+    .item-pill:hover { transform:translateY(-2px); box-shadow:0 6px 18px rgba(22,163,74,.10); }
+    .addon-pill { border:2px solid #e5e7eb; transition:all .18s ease; cursor:pointer; }
+    .addon-pill:hover { border-color:var(--green); background:#f0fdf4; transform:translateY(-2px); box-shadow:0 6px 18px rgba(22,163,74,.10); }
     .reveal { opacity:0; transform:translateY(20px); transition:opacity .55s ease, transform .55s ease; }
     .reveal.visible { opacity:1; transform:none; }
     .kit-hero { position:relative; overflow:hidden; }
-    .kit-hero::before {
-      content:''; position:absolute; inset:0;
-      background: radial-gradient(ellipse at 80% 30%, rgba(255,255,255,.06) 0%, transparent 60%);
-    }
+    .kit-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 80% 30%, rgba(255,255,255,.06) 0%, transparent 60%); }
     .mobile-cta { position:fixed; bottom:0; left:0; right:0; z-index:50; background:white;
-      border-top:2px solid #e5e7eb; padding:12px 16px; display:none;
-      align-items:center; justify-content:space-between; }
+      border-top:2px solid #e5e7eb; padding:12px 16px; display:none; align-items:center; justify-content:space-between; }
     @media(max-width:1023px){ .mobile-cta{ display:flex; } }
 </style>
 </head>
@@ -56,32 +45,27 @@
     <div class="flex items-center gap-3">
       <a href="index.html#kits" class="text-sm font-medium text-gray-600 hover:text-green-600 hidden md:block">All Kits</a>
       <a href="https://shop.prepwisekits.com" target="_blank"
-         class="bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
-        Shop Now
-      </a>
+         class="bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">Shop Now</a>
     </div>
   </div>
 </nav>
-
 <section class="kit-hero bg-gradient-to-br from-blue-900 to-blue-950 text-white py-16 lg:py-20">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <a href="index.html#kits" class="inline-flex items-center gap-1.5 text-blue-300 hover:text-blue-200 text-sm font-medium mb-6 transition-colors">
+    <a href="index.html#kits" class="inline-flex items-center gap-1.5 text-sm font-medium mb-6 opacity-70 hover:opacity-100 transition-opacity">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
       Back to all kits
     </a>
     <span class="inline-block bg-blue-500/20 text-blue-200 text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-wider">🏢 Office Ready — Available Now</span>
     <h1 class="font-serif text-4xl sm:text-5xl font-bold mb-4 leading-tight">Office Shelter-<br/>in-Place Kit</h1>
-    <p class="text-blue-200 text-lg leading-relaxed max-w-2xl mb-6">24 hours of readiness in a hard-shell carry case — built for office workers, and perfect for corporate gifting programs at any scale.</p>
+    <p class="text-blue-200 text-lg leading-relaxed max-w-2xl mb-6">24 hours of readiness in a hard-shell carry case — built for office workers, and perfect for corporate gifting programs.</p>
     <div class="flex flex-wrap items-baseline gap-4 mb-6">
-      <div><span class="text-4xl font-bold">$79</span> <span class="text-blue-300">individual</span></div>
+      <div><span class="text-4xl font-bold">$79</span><span class="text-blue-300 ml-2">individual</span></div>
       <div class="text-blue-400">·</div>
-      <div class="text-blue-300 text-sm">B2B / bulk pricing available — <a href="mailto:hello@prepwisekits.com" class="underline hover:text-white">contact us</a></div>
+      <div class="text-blue-300 text-sm">B2B / bulk pricing — <a href="mailto:hello@prepwisekits.com" class="underline hover:text-white">contact us</a></div>
     </div>
     <div class="flex flex-wrap gap-3">
       <a href="https://shop.prepwisekits.com/products/office-shelter-in-place-kit" target="_blank"
-         class="bg-green-500 hover:bg-green-400 text-white font-bold px-8 py-3.5 rounded-xl transition-colors shadow-lg">
-        Shop This Kit →
-      </a>
+         class="bg-green-500 hover:bg-green-400 text-white font-bold px-8 py-3.5 rounded-xl transition-colors shadow-lg">Shop This Kit →</a>
       <div class="flex items-center gap-2 text-sm text-blue-300">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
         Hand-packed in Chicago · Ships 2–3 days · 30-day guarantee
@@ -89,16 +73,14 @@
     </div>
   </div>
 </section>
-
 <section class="py-20 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-10 reveal">
       <span class="section-label text-green-600">What's Inside</span>
       <h2 class="font-serif text-3xl font-bold mt-2 mb-3">Complete Kit — 15 Items</h2>
-      <p class="text-gray-500 max-w-xl mx-auto">Every item fits in the included hard-shell carry case — compact enough to keep in a desk drawer or under your desk.</p>
+      <p class="text-gray-500 max-w-xl mx-auto">Compact enough for a desk drawer or under-desk storage. Hard-shell carry case included.</p>
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 reveal">
-      
       <div class="item-pill bg-white rounded-xl p-4 text-center">
         <div class="text-2xl mb-2">🍫</div>
         <div class="text-xs font-semibold text-gray-900 mb-0.5 leading-snug">Emergency Food Bar (2,400 cal)</div>
@@ -188,20 +170,18 @@
         <div class="text-xs font-semibold text-gray-900 mb-0.5 leading-snug">Digital Companion Guide</div>
         <div class='text-xs text-gray-400 mb-1.5 leading-snug'>QR card → evacuation routes + ICE contacts</div>
         <span class="inline-block text-xs font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">✓ Included</span>
-      </div>
-    </div>
+      </div></div>
   </div>
 </section>
-
 
 <section class="py-20 bg-gray-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-10 reveal">
       <span class="section-label text-green-600">Complete Your Kit</span>
       <h2 class="font-serif text-3xl font-bold mt-2 mb-3">Universal Add-Ons</h2>
-      <p class="text-gray-500 max-w-xl mx-auto">Every add-on ships together with your kit in the same order — no minimum, mix and match. All 18 items available.</p>
+      <p class="text-gray-500 max-w-xl mx-auto">Every add-on ships together with your kit — no minimum, mix and match. All 21 items available.</p>
     </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 reveal">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3 reveal">
       
       <div class="addon-pill bg-white rounded-xl p-4 text-center">
         <div class="text-2xl mb-2">🔦</div>
@@ -254,6 +234,21 @@
         <div class="text-xs text-green-600 font-bold">$27.99</div>
       </div>
       <div class="addon-pill bg-white rounded-xl p-4 text-center">
+        <div class="text-2xl mb-2">🩹</div>
+        <div class="text-xs font-semibold text-gray-900 mb-1 leading-snug">First Aid Kit (100-piece)</div>
+        <div class="text-xs text-green-600 font-bold">$14.99</div>
+      </div>
+      <div class="addon-pill bg-white rounded-xl p-4 text-center">
+        <div class="text-2xl mb-2">💊</div>
+        <div class="text-xs font-semibold text-gray-900 mb-1 leading-snug">Water Purification Tablets (50-ct)</div>
+        <div class="text-xs text-green-600 font-bold">$7.99</div>
+      </div>
+      <div class="addon-pill bg-white rounded-xl p-4 text-center">
+        <div class="text-2xl mb-2">⚠️</div>
+        <div class="text-xs font-semibold text-gray-900 mb-1 leading-snug">Emergency Whistle</div>
+        <div class="text-xs text-green-600 font-bold">$5.99</div>
+      </div>
+      <div class="addon-pill bg-white rounded-xl p-4 text-center">
         <div class="text-2xl mb-2">📻</div>
         <div class="text-xs font-semibold text-gray-900 mb-1 leading-snug">NOAA Hand-Crank + Solar Radio</div>
         <div class="text-xs text-green-600 font-bold">$34.99</div>
@@ -299,7 +294,7 @@
          class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3.5 rounded-xl transition-colors shadow-md">
         Shop This Kit + Add Your Add-Ons →
       </a>
-      <p class="text-xs text-gray-400 mt-2">You'll select add-ons at checkout · Free shipping over $149</p>
+      <p class="text-xs text-gray-400 mt-2">Select add-ons at checkout · Free shipping over $149</p>
     </div>
   </div>
 </section>
@@ -307,22 +302,21 @@
 <section class="bg-gradient-to-br from-blue-900 to-blue-950 py-16 text-white text-center reveal">
   <div class="max-w-xl mx-auto px-4">
     <h2 class="font-serif text-3xl font-bold mb-3">Ready to order your Office Shelter-in-Place Kit?</h2>
-    <p class="text-green-200 mb-6 leading-relaxed">Hand-packed in Chicago · Ships in 2–3 days · 30-day guarantee</p>
+    <p class="opacity-75 mb-6">Hand-packed in Chicago · Ships in 2–3 days · 30-day guarantee</p>
     <a href="https://shop.prepwisekits.com/products/office-shelter-in-place-kit" target="_blank"
-       class="inline-block bg-white text-green-700 font-bold px-10 py-3.5 rounded-xl hover:bg-green-50 transition-colors shadow-lg">
+       class="inline-block bg-white font-bold px-10 py-3.5 rounded-xl hover:opacity-90 transition-opacity shadow-lg text-gray-900">
       Shop Now — $79 →
     </a>
   </div>
 </section>
+
 <div class="mobile-cta">
   <div>
     <div class="text-xs text-gray-500">Starting at</div>
     <div class="font-bold text-gray-900">$79 · B2B bulk pricing available</div>
   </div>
   <a href="https://shop.prepwisekits.com/products/office-shelter-in-place-kit" target="_blank"
-     class="bg-green-600 text-white font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-green-700">
-    Shop Now →
-  </a>
+     class="bg-green-600 text-white font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-green-700">Shop Now →</a>
 </div>
 
 <footer class="bg-gray-900 text-gray-400 py-10">
@@ -337,10 +331,10 @@
       <span class="text-gray-600 text-xs ml-2">© 2026 Urban Resilience Systems</span>
     </div>
     <div class="flex items-center gap-5 text-sm">
-      <a href="index.html" class="hover:text-white transition-colors">Home</a>
-      <a href="index.html#kits" class="hover:text-white transition-colors">All Kits</a>
-      <a href="index.html#addons" class="hover:text-white transition-colors">Add-Ons</a>
-      <a href="https://shop.prepwisekits.com" target="_blank" class="hover:text-white transition-colors">Shop</a>
+      <a href="index.html" class="hover:text-white">Home</a>
+      <a href="index.html#kits" class="hover:text-white">All Kits</a>
+      <a href="index.html#addons" class="hover:text-white">Add-Ons</a>
+      <a href="https://shop.prepwisekits.com" target="_blank" class="hover:text-white">Shop</a>
     </div>
   </div>
 </footer>
